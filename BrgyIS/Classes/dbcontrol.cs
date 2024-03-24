@@ -1,4 +1,5 @@
-﻿using Microsoft.Reporting.WebForms;
+﻿using BrgyIS.Models;
+using Microsoft.Reporting.WebForms;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -56,6 +57,14 @@ public class Tool
         return result;
     }
 
+    public static SelectList Gender
+    {
+        get
+        {
+            return new SelectList(new string[] { "Male", "Female" });
+        }
+    }
+
     public static byte[] ReportWrapper(string ReportPath, string Filename, ReportFormat format, Action<List<ReportDataSource>, List<ReportParameter>> _data)
     {
         byte[] result;
@@ -91,6 +100,11 @@ public class Tool
         HttpContext.Current.Response.End();
         return result;
     }
+}
+
+public class UserSession
+{
+    public static tbl_User User { get { return (tbl_User)HttpContext.Current.Session["User"]; } }
 }
 
 public enum ReportFormat

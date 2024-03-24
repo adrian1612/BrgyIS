@@ -159,6 +159,7 @@
     <Compile Include="Classes\dbcontrol.cs" />
     <Compile Include="Classes\MasterControl.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\PersonController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -170,6 +171,7 @@
     <Compile Include="init.aspx.designer.cs">
       <DependentUpon>init.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Models\tbl_Person.cs" />
     <Compile Include="Models\tbl_User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -992,6 +994,7 @@
     <Content Include="Scripts\knockout.validation.js" />
     <Content Include="Scripts\knockout.validation.min.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
+    <Content Include="Scripts\moment.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\scripts.js" />
@@ -1184,6 +1187,10 @@
     <Content Include="Views\Home\Login.cshtml" />
     <Content Include="Views\Home\Registration.cshtml" />
     <Content Include="Scripts\knockout.validation.min.js.map" />
+    <Content Include="Views\Person\Create.cshtml" />
+    <Content Include="Views\Person\Edit.cshtml" />
+    <Content Include="Views\Person\Field.cshtml" />
+    <Content Include="Views\Person\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -1210,7 +1217,7 @@
     <VisualStudio>
       <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
         <WebProjectProperties>
-          <UseIIS>True</UseIIS>
+          <UseIIS>False</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>42388</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>

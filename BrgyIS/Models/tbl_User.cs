@@ -22,6 +22,7 @@ namespace BrgyIS.Models
         [Display(Name = "Password")]
         [MinLength(6, ErrorMessage = "Atleast minimum of 6 character.")]
         [Required]
+        [DataType(DataType.Password)]
         public String Password { get; set; }
 
         [Display(Name = "Role")]

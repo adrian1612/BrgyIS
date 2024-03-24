@@ -46,6 +46,7 @@ namespace BrgyIS
                       "~/Scripts/index.global.js",
                       "~/Scripts/main.js",
                       "~/Scripts/toastr.js",
+                      "~/Scripts/moment.js",
                       "~/Scripts/jquery.signaturepad.js",
                       "~/Content/SignaturePad/json2.min.js",
                       "~/Scripts/scripts.js"));
