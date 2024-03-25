@@ -34,14 +34,14 @@
     <div class="row mb-3">
         @Html.LabelFor(model => model.gender, new { @class = "col-sm-2 col-md-3 col-form-label col-form-label-sm" })
         <div class="col-sm-10 col-md-9">
-            @Html.EditorFor(model => model.gender, new { htmlAttributes = new { @class = "form-control form-control-sm" } })
+            @Html.DropDownListFor(model => model.gender, Tool.Gender, new { @class = "form-select form-select-sm" })
             @Html.ValidationMessageFor(model => model.gender, "", new { @class = "text-danger" })
         </div>
     </div>
     <div class="row mb-3">
         @Html.LabelFor(model => model.CivilStatus, new { @class = "col-sm-2 col-md-3 col-form-label col-form-label-sm" })
         <div class="col-sm-10 col-md-9">
-            @Html.EditorFor(model => model.CivilStatus, new { htmlAttributes = new { @class = "form-control form-control-sm" } })
+            @Html.DropDownListFor(model => model.CivilStatus, Tool.CivilStatus, new { @class = "form-select form-select-sm searchbox" })
             @Html.ValidationMessageFor(model => model.CivilStatus, "", new { @class = "text-danger" })
         </div>
     </div>
@@ -95,3 +95,9 @@
         </div>
     </div>
 </div>
+
+<script>
+
+    $('.searchbox').select2({ width: 'style' });
+
+</script>

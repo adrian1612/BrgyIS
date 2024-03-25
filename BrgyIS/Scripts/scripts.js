@@ -96,12 +96,24 @@ class tableCart {
     }
 }
 
-$('.modal').on('show.bs.modal', () => {
+$(document).on('ajaxSuccess', () => {
+    $('#spinner').hide();
+});
+
+$(document).on('ajaxSend', () => {
     $('#spinner').show();
 });
 
-$('.modal').on('shown.bs.modal', () => {
-    $('#spinner').hide();
+$('body').on('shown.bs.modal', '.modal', function() {
+    $(this).find('.searchbox').each(function() {
+        var dropdownParent = $(document.body);
+        if ($(this).parents('.modal').length !== 0)
+            dropdownParent = $(this).parents('.modal');
+        $(this).select2({
+            width: 'style',
+            dropdownParent: dropdownParent
+        });
+    });
 });
 
 $(document).ready(function () {

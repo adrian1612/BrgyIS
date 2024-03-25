@@ -65,6 +65,14 @@ public class Tool
         }
     }
 
+    public static SelectList CivilStatus
+    {
+        get
+        {
+            return new SelectList(new string[] { "Single", "Married", "Widow", "Divorce", "Legally Separated" });
+        }
+    }
+
     public static byte[] ReportWrapper(string ReportPath, string Filename, ReportFormat format, Action<List<ReportDataSource>, List<ReportParameter>> _data)
     {
         byte[] result;
