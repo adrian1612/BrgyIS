@@ -1,11 +1,11 @@
 ﻿USE [master]
 GO
-/****** Object:  Database [dbBrgyIS]    Script Date: 24/03/2024 1:43:06 pm ******/
+/****** Object:  Database [dbBrgyIS]    Script Date: 25/03/2024 11:24:01 am ******/
 CREATE DATABASE [dbBrgyIS]
 GO
 USE [dbBrgyIS]
 GO
-/****** Object:  StoredProcedure [dbo].[tbl_Person_Proc]    Script Date: 24/03/2024 1:43:06 pm ******/
+/****** Object:  StoredProcedure [dbo].[tbl_Person_Proc]    Script Date: 25/03/2024 11:24:01 am ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -34,9 +34,9 @@ BEGIN
 IF @Type = 'Create'
 BEGIN
 INSERT INTO [tbl_Person]
-([fname],[mn],[lname],[bday],[gender],[CivilStatus],[ShelterType],[Occupation],[isPWD],[RelationshipToHead],[StNo],[Address],[Remarks],[Encoder],[Timestamp])
+([fname],[mn],[lname],[bday],[gender],[CivilStatus],[ShelterType],[Occupation],[isPWD],[RelationshipToHead],[StNo],[Address],[Remarks],[Encoder])
 VALUES
-(@fname,@mn,@lname,@bday,@gender,@CivilStatus,@ShelterType,@Occupation,@isPWD,@RelationshipToHead,@StNo,@Address,@Remarks,@Encoder,@Timestamp)
+(@fname,@mn,@lname,@bday,@gender,@CivilStatus,@ShelterType,@Occupation,@isPWD,@RelationshipToHead,@StNo,@Address,@Remarks,@Encoder)
 
 END
 --------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -55,8 +55,7 @@ UPDATE [tbl_Person] SET [fname] = @fname
 ,[StNo] = @StNo
 ,[Address] = @Address
 ,[Remarks] = @Remarks
-,[Encoder] = @Encoder
-,[Timestamp] = @Timestamp WHERE [ID] = @ID
+ WHERE [ID] = @ID
 END
 --------------------------------------------------------------------------------------------------------------------------------------------------------------
 IF @Type = 'Search'
@@ -73,8 +72,9 @@ END
 END
 
 
+
 GO
-/****** Object:  StoredProcedure [dbo].[tbl_User_Proc]    Script Date: 24/03/2024 1:43:06 pm ******/
+/****** Object:  StoredProcedure [dbo].[tbl_User_Proc]    Script Date: 25/03/2024 11:24:01 am ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -162,8 +162,9 @@ BEGIN
 	SELECT * FROM [tbl_User] WHERE HASHBYTES('MD5', Username) = HASHBYTES('MD5', @Username) AND HASHBYTES('MD5', [Password]) = HASHBYTES('MD5', @Password) 
 END
 END
+
 GO
-/****** Object:  Table [dbo].[tbl_Person]    Script Date: 24/03/2024 1:43:06 pm ******/
+/****** Object:  Table [dbo].[tbl_Person]    Script Date: 25/03/2024 11:24:01 am ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -186,7 +187,7 @@ CREATE TABLE [dbo].[tbl_Person](
 	[Address] [varchar](max) NULL,
 	[Remarks] [varchar](max) NULL,
 	[Encoder] [int] NULL,
-	[Timestamp] [datetime] NULL,
+	[Timestamp] [datetime] NULL DEFAULT (getdate()),
 PRIMARY KEY CLUSTERED 
 (
 	[ID] ASC
@@ -196,7 +197,7 @@ PRIMARY KEY CLUSTERED
 GO
 SET ANSI_PADDING OFF
 GO
-/****** Object:  Table [dbo].[tbl_User]    Script Date: 24/03/2024 1:43:06 pm ******/
+/****** Object:  Table [dbo].[tbl_User]    Script Date: 25/03/2024 11:24:01 am ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -207,15 +208,15 @@ CREATE TABLE [dbo].[tbl_User](
 	[ID] [int] IDENTITY(1,1) NOT NULL,
 	[Username] [varchar](max) NULL,
 	[Password] [varchar](max) NULL,
-	[Role] [int] NULL,
-	[Active] [bit] NULL,
+	[Role] [int] NULL DEFAULT ((2)),
+	[Active] [bit] NULL DEFAULT ((1)),
 	[fname] [varchar](max) NULL,
 	[mn] [varchar](max) NULL,
 	[lname] [varchar](max) NULL,
 	[gender] [varchar](50) NULL,
 	[email] [varchar](max) NULL,
 	[address] [varchar](max) NULL,
-	[Timestamp] [datetime] NULL
+	[Timestamp] [datetime] NULL DEFAULT (getdate())
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 
 GO
@@ -224,24 +225,16 @@ GO
 SET IDENTITY_INSERT [dbo].[tbl_Person] ON 
 
 GO
-INSERT [dbo].[tbl_Person] ([ID], [fname], [mn], [lname], [bday], [gender], [CivilStatus], [ShelterType], [Occupation], [isPWD], [RelationshipToHead], [StNo], [Address], [Remarks], [Encoder], [Timestamp]) VALUES (1, N'Adrian', N'Aranilla', N'Jaspio', CAST(0x000086D600000000 AS DateTime), N'Male', N'Married', N'Rented', N'Computer Programmer', 0, N'Head of the Family', N'Kahusayan st', N'Pamana Homes sub kahusayan st, brgy bucal', NULL, 1, NULL)
+INSERT [dbo].[tbl_Person] ([ID], [fname], [mn], [lname], [bday], [gender], [CivilStatus], [ShelterType], [Occupation], [isPWD], [RelationshipToHead], [StNo], [Address], [Remarks], [Encoder], [Timestamp]) VALUES (1, N'adrian', N'Aranilla', N'Jaspio', CAST(N'1994-07-05 00:00:00.000' AS DateTime), N'Male', N'Married', N'Rented', N'Computer Programmer', 0, N'Head of the Family', N'Kahusayan st', N'Pamana Homes sub kahusayan st, brgy bucal', NULL, NULL, NULL)
 GO
 SET IDENTITY_INSERT [dbo].[tbl_Person] OFF
 GO
 SET IDENTITY_INSERT [dbo].[tbl_User] ON 
 
 GO
-INSERT [dbo].[tbl_User] ([ID], [Username], [Password], [Role], [Active], [fname], [mn], [lname], [gender], [email], [address], [Timestamp]) VALUES (1, N'admin', N'admin!!@@', 2, 1, N'adrian', N'aranilla', N'jaspio', N'Male', N'adrianjaspio@gmail.com', N'purok santol 1 mayao crossing lucena city', CAST(0x0000B13D00DA7267 AS DateTime))
+INSERT [dbo].[tbl_User] ([ID], [Username], [Password], [Role], [Active], [fname], [mn], [lname], [gender], [email], [address], [Timestamp]) VALUES (1, N'admin', N'admin!!@@', 2, 1, N'adrian', N'aranilla', N'jaspio', N'Male', N'adrianjaspio@gmail.com', N'purok santol 1 mayao crossing lucena city', CAST(N'2024-03-24 13:15:20.450' AS DateTime))
 GO
 SET IDENTITY_INSERT [dbo].[tbl_User] OFF
-GO
-ALTER TABLE [dbo].[tbl_Person] ADD  DEFAULT (getdate()) FOR [Timestamp]
-GO
-ALTER TABLE [dbo].[tbl_User] ADD  DEFAULT ((2)) FOR [Role]
-GO
-ALTER TABLE [dbo].[tbl_User] ADD  DEFAULT ((1)) FOR [Active]
-GO
-ALTER TABLE [dbo].[tbl_User] ADD  DEFAULT (getdate()) FOR [Timestamp]
 GO
 USE [master]
 GO

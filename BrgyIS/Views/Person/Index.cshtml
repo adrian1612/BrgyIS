@@ -1,6 +1,6 @@
 @using BrgyIS.Models
 @{
-    ViewBag.Title = "Person";
+    ViewBag.Title = "People";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -20,27 +20,27 @@
         <div class="row row-cols-lg-auto g-1 align-items-center mt-3">
             <div class="col" aria-action="Add">
                 <p>
-                    @Html.ActionLink("Create New", "Create", "", new { @class = "btn btn-success" })
+                    <a href="#" onclick="CreateForm()"><i class="fa fa-plus-circle"></i> New record</a>
                 </p>
             </div>
         </div>
-        <table id="data" class="table table-light table-hover table-striped" style="font-size:0.9rem;with:100%;">
+        <table id="data" class="table table-light table-hover table-striped table-bordered" style="font-size:0.9rem; with:100%;">
             <thead>
                 <tr>
                     <th>ID</th>
-                    <th>First name</th>
-                    <th>Middle name</th>
-                    <th>Last name</th>
-                    <th>Date of Birth</th>
-                    <th>Gender</th>
-                    <th>Civil Status</th>
-                    <th>Shelter Type</th>
-                    <th>Occupation</th>
-                    <th>PWD</th>
-                    <th>Relationship</th>
-                    <th>St. No</th>
-                    <th>Address</th>
-                    <th>Remarks</th>
+                    <th class="text-nowrap">First name</th>
+                    <th class="text-nowrap">Middle name</th>
+                    <th class="text-nowrap">Last name</th>
+                    <th class="text-nowrap">Date of Birth</th>
+                    <th class="text-nowrap">Gender</th>
+                    <th class="text-nowrap">Civil Status</th>
+                    <th class="text-nowrap">Shelter Type</th>
+                    <th class="text-nowrap">Occupation</th>
+                    <th class="text-nowrap">PWD</th>
+                    <th class="text-nowrap">Relationship</th>
+                    <th class="text-nowrap">St. No</th>
+                    <th class="text-nowrap">Address</th>
+                    <th class="text-nowrap">Remarks</th>
                     <th></th>
                 </tr>
             </thead>
@@ -67,52 +67,48 @@
     </div>
 </div>
 
+<div class="modal fade" id="actionModal" aria-labelledby="actionModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            
+        </div>
+    </div>
+</div>
+
 @section scripts {
     <script>
-        function Model() {
-            var self = this;
 
-            self.table = $('#data').DataTable({
-                responsive: true,
-                layout: {
-                    top: {
-                        buttons: [
-							{
-							    extend: 'print',
-							    exportOptions: {
-							        columns: ':visible'
-							    }
-							},
-							{
-							    extend: 'excel',
-							    exportOptions: {
-							        columns: ':visible'
-							    }
-							},
-							{
-							    extend: 'colvis',
-							    exportOptions: {
-							        columns: ':visible'
-							    }
-							}
-                        ]
-                    }
-                },
-                ajax: { url: '@Url.Action("List", "Person", new { area = ""})', dataSrc: '' },
-                columns: [
-				{ data: 'ID' }, { data: 'fname' }, { data: 'mn' }, { data: 'lname' }, { data: 'bday', render: (data) => { return moment(data).format('MMM DD, yyyy'); } }, { data: 'gender' }, { data: 'CivilStatus' }, { data: 'ShelterType' }, { data: 'Occupation' }, { data: 'isPWD' }, { data: 'RelationshipToHead' }, { data: 'StNo' }, { data: 'Address' }, { data: 'Remarks' },
-				{
-				    data: 'ID',
-				    render: (data) => {
-				        return `<a href='@Url.Action("Edit", "Person", new { area = ""})?ID=${data}'><i class="fa fa-edit"></i></a>`;
-				    }
-				}],
-                ordering: false,
-                searching: true,
-                stateSave: true
+        var CreateForm = () => {
+            $.get('@Url.Action("Create", "Person", new { area = "" })', null, (d) => {
+                $('#actionModal .modal-content').html(d);
+                $('#actionModal').modal('show');
             });
         }
 
-        ko.applyBindings(new Model());
+        var EditForm = (ID) => {
+            $.get(`@Url.Action("Edit", "Person", new { area = "" })?ID=${ID}`, null, (d) => {
+                $('#actionModal .modal-content').html(d);
+                $('#actionModal').modal('show');
+            });
+        }
+
+        var table = $('#data').DataTable({
+            responsive: true,
+            layout: {
+                top: {
+                    buttons: [{ extend: 'print', exportOptions: { columns: ':visible' } }, { extend: 'excel', exportOptions: { columns: ':visible' } }, { extend: 'colvis', exportOptions: { columns: ':visible' } }]
+                }
+            },
+            ajax: { url: '@Url.Action("List", "Person", new { area = ""})', dataSrc: '' },
+            columns: [{ data: 'ID' }, { data: 'fname' }, { data: 'mn' }, { data: 'lname' }, { data: 'bday', render: (data) => { return moment(data).format('MMM DD, yyyy'); } }, { data: 'gender' }, { data: 'CivilStatus' }, { data: 'ShelterType' }, { data: 'Occupation' }, { data: 'isPWD' }, { data: 'RelationshipToHead' }, { data: 'StNo' }, { data: 'Address' }, { data: 'Remarks' },
+            {
+                data: 'ID',
+                render: (data) => { return `<a href='#' onclick="EditForm(${data})"><i class="fa fa-edit"></i></a>`; }
+            }],
+            ordering: false,
+            searching: true,
+            stateSave: true
+        });
+
     </script>
 }

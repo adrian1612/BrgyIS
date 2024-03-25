@@ -35,35 +35,45 @@ namespace BrgyIS.Models
 
         public ActionResult Create()
         {
-            return View();
+            return PartialView();
         }
 
         [HttpPost]
         public ActionResult Create(tbl_Person m)
         {
+            string Message = string.Empty; bool isSuccess = true;
+            var errors = (List<string>)ModelState.Values.SelectMany(f => f.Errors.Select(e => e.ErrorMessage));
+            errors.ForEach(r => Message += $"{r}\n");
+            isSuccess = errors.Count <= 0;
             if (ModelState.IsValid)
             {
                 mod.Create(m);
-                return RedirectToAction("Index");
+                Message = "New record successfully submitted";
             }
-            return View(m);
+            var result = new { Data = "", Status = isSuccess, Message = Message };
+            return new JsonNetResult { Data = result };
         }
 
         public ActionResult Edit(int ID)
         {
             var item = mod.Find(ID);
-            return View(item);
+            return PartialView(item);
         }
 
         [HttpPost]
         public ActionResult Edit(tbl_Person m)
         {
+            string Message = string.Empty; bool isSuccess = true;
+            var errors = ModelState.Values.SelectMany(f => f.Errors.Select(e => e.ErrorMessage));
+            errors.ToList().ForEach(r => Message += $"{r}\n");
+            isSuccess = errors.ToList().Count <= 0;
             if (ModelState.IsValid)
             {
                 mod.Update(m);
-                return RedirectToAction("Index");
+                Message = "Record successfully updated";
             }
-            return View(m);
+            var result = new { Data = "", Status = isSuccess, Message = Message };
+            return new JsonNetResult { Data = result };
         }
 
         public ActionResult Detail(int ID)

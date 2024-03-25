@@ -96,6 +96,14 @@ class tableCart {
     }
 }
 
+$('.modal').on('show.bs.modal', () => {
+    $('#spinner').show();
+});
+
+$('.modal').on('shown.bs.modal', () => {
+    $('#spinner').hide();
+});
+
 $(document).ready(function () {
     var bootstrapButton = $.fn.button.noConflict()
     $.fn.bootstrapBtn = bootstrapButton;
