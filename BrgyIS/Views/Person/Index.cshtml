@@ -95,13 +95,14 @@
         }
 
         var table = $('#data').DataTable({
+            select: {items: 'row',info: false},
             responsive: true,
             layout: {
                 top: {
                     buttons: [{ extend: 'print', exportOptions: { columns: ':visible' } }, { extend: 'excel', exportOptions: { columns: ':visible' } }, { extend: 'colvis', exportOptions: { columns: ':visible' } }]
                 }
             },
-            ajax: { url: '@Url.Action("List", "Person", new { area = ""})', dataSrc: '' },
+            ajax: { url: '@Url.Action("List", "Person", new { area = ""})' },
             columns: [{ data: 'ID' }, { data: 'fname' }, { data: 'mn' }, { data: 'lname' }, { data: 'bday', render: (data) => { return moment(data).format('MMM DD, yyyy'); } }, { data: 'gender' }, { data: 'CivilStatus' }, { data: 'ShelterType' }, { data: 'Occupation' }, { data: 'isPWD' }, { data: 'RelationshipToHead' }, { data: 'StNo' }, { data: 'Address' }, { data: 'Remarks' },
             {
                 data: 'ID',

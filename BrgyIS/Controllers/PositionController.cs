@@ -7,9 +7,10 @@ using System.Web.Mvc;
 
 namespace BrgyIS.Models
 {
-    public class PersonController : Controller
+    [Authorized]
+    public class PositionController : Controller
     {
-        tbl_Person mod = new tbl_Person();
+        tbl_ref_Position mod = new tbl_ref_Position();
         public ActionResult Index()
         {
             return View();
@@ -21,37 +22,40 @@ namespace BrgyIS.Models
             return new JsonNetResult() { Data = new { data = list } };
         }
 
-        public ActionResult Action(string Type, int? ID = null)
-        {
-            switch (Type)
-            {
-                case "Add":
-                    return RedirectToAction("Create");
-                case "Edit":
-                    return RedirectToAction("Edit", new { ID = ID });
-            }
-            return View();
-        }
-
         public ActionResult Create()
         {
             return PartialView();
         }
 
         [HttpPost]
-        public ActionResult Create(tbl_Person m)
+        public ActionResult Create(tbl_ref_Position m)
+        {
+            string Message = string.Empty; bool isSuccess = true;
+            Validator(out Message, out isSuccess);
+            if (ModelState.IsValid)
+            {
+                if (mod.Create(m))
+                {
+                    Message = "New record successfully submitted";
+                    isSuccess = true;
+                }
+                else
+                {
+                    Message = "Position already in the list";
+                    isSuccess = false;
+                }
+            }
+            var result = new { Data = "", Status = isSuccess, Message = Message };
+            return new JsonNetResult { Data = result };
+        }
+
+        void Validator(out string _Message, out bool _isSuccess)
         {
             string Message = string.Empty; bool isSuccess = true;
             var errors = ModelState.Values.SelectMany(f => f.Errors.Select(e => e.ErrorMessage));
             errors.ToList().ForEach(r => Message += $"{r}\n");
             isSuccess = errors.ToList().Count <= 0;
-            if (ModelState.IsValid)
-            {
-                mod.Create(m);
-                Message = "New record successfully submitted";
-            }
-            var result = new { Data = "", Status = isSuccess, Message = Message };
-            return new JsonNetResult { Data = result };
+            _Message = Message; _isSuccess = isSuccess;
         }
 
         public ActionResult Edit(int ID)
@@ -61,16 +65,22 @@ namespace BrgyIS.Models
         }
 
         [HttpPost]
-        public ActionResult Edit(tbl_Person m)
+        public ActionResult Edit(tbl_ref_Position m)
         {
             string Message = string.Empty; bool isSuccess = true;
-            var errors = ModelState.Values.SelectMany(f => f.Errors.Select(e => e.ErrorMessage));
-            errors.ToList().ForEach(r => Message += $"{r}\n");
-            isSuccess = errors.ToList().Count <= 0;
+            Validator(out Message, out isSuccess);
             if (ModelState.IsValid)
             {
-                mod.Update(m);
-                Message = "Record successfully updated";
+                if (mod.Update(m))
+                {
+                    Message = "Record successfully updated";
+                    isSuccess = true;
+                }
+                else
+                {
+                    Message = "Position already in the list";
+                    isSuccess = false;
+                }
             }
             var result = new { Data = "", Status = isSuccess, Message = Message };
             return new JsonNetResult { Data = result };
@@ -89,7 +99,7 @@ namespace BrgyIS.Models
         }
 
         [HttpPost]
-        public ActionResult Delete(tbl_Person m)
+        public ActionResult Delete(tbl_ref_Position m)
         {
             m.Delete(m);
             return RedirectToAction("Index");
