@@ -1,0 +1,39 @@
+@using BrgyIS.Models
+@model tbl_Staff
+@{
+
+}
+<div class="col-md-12">
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+</div>
+<div class="col-md-12">
+    <div class="row mb-3">
+        @Html.LabelFor(model => model.Name, new { @class = "col-sm-2 col-md-3 col-form-label col-form-label-sm" })
+        <div class="col-sm-10 col-md-9">
+            @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control form-control-sm" } })
+            @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="row mb-3">
+        @Html.LabelFor(model => model.Position, new { @class = "col-sm-2 col-md-3 col-form-label col-form-label-sm" })
+        <div class="col-sm-10 col-md-9">
+            @Html.DropDownListFor(model => model.Position, new tbl_ref_Position().ListPosition(), "Select Position", new { @class = "form-select form-select-sm searchbox" })
+            @Html.ValidationMessageFor(model => model.Position, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="row mb-3">
+        @Html.LabelFor(model => model.Instated, new { @class = "col-sm-2 col-md-3 col-form-label col-form-label-sm" })
+        <div class="col-sm-10 col-md-9">
+            @Html.EditorFor(model => model.Instated, new { htmlAttributes = new { @class = "form-control form-control-sm" } })
+            @Html.ValidationMessageFor(model => model.Instated, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="row mb-3">
+        @Html.LabelFor(model => model.Active, new { @class = "col-sm-2 col-md-3 col-form-label col-form-label-sm" })
+        <div class="col-sm-10 col-md-9">
+            @Html.EditorFor(model => model.Active, new { htmlAttributes = new { @class = "form-control form-control-sm" } })
+            @Html.ValidationMessageFor(model => model.Active, "", new { @class = "text-danger" })
+        </div>
+    </div>
+</div>

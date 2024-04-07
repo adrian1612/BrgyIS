@@ -1,11 +1,11 @@
 ﻿USE [master]
 GO
-/****** Object:  Database [dbBrgyIS]    Script Date: 02/04/2024 7:36:46 pm ******/
+/****** Object:  Database [dbBrgyIS]    Script Date: 07/04/2024 9:49:10 pm ******/
 CREATE DATABASE [dbBrgyIS]
 GO
 USE [dbBrgyIS]
 GO
-/****** Object:  StoredProcedure [dbo].[tbl_Person_Proc]    Script Date: 02/04/2024 7:36:46 pm ******/
+/****** Object:  StoredProcedure [dbo].[tbl_Person_Proc]    Script Date: 07/04/2024 9:49:10 pm ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -74,8 +74,9 @@ END
 
 
 
+
 GO
-/****** Object:  StoredProcedure [dbo].[tbl_ref_Position_Proc]    Script Date: 02/04/2024 7:36:46 pm ******/
+/****** Object:  StoredProcedure [dbo].[tbl_ref_Position_Proc]    Script Date: 07/04/2024 9:49:10 pm ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -133,8 +134,59 @@ END
 END
 
 
+
 GO
-/****** Object:  StoredProcedure [dbo].[tbl_User_Proc]    Script Date: 02/04/2024 7:36:46 pm ******/
+/****** Object:  StoredProcedure [dbo].[tbl_Staff_Proc]    Script Date: 07/04/2024 9:49:10 pm ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROCEDURE [dbo].[tbl_Staff_Proc]
+@Type VARCHAR(50),
+@Search VARCHAR(max) = null,
+@ID int = null,
+@Name varchar(max) = null,
+@Position int = null,
+@Instated datetime = null,
+@Active bit = null,
+@Encoder int = null,
+@Timestamp datetime = null
+AS
+BEGIN
+IF @Type = 'Create'
+BEGIN
+INSERT INTO [tbl_Staff]
+([Name],[Position],[Instated],[Encoder])
+VALUES
+(@Name,@Position,@Instated,@Encoder)
+
+END
+--------------------------------------------------------------------------------------------------------------------------------------------------------------
+IF @Type = 'Update'
+BEGIN
+UPDATE [tbl_Staff] SET [Name] = @Name
+,[Position] = @Position
+,[Instated] = @Instated
+,[Active] = @Active
+ WHERE [ID] = @ID
+END
+--------------------------------------------------------------------------------------------------------------------------------------------------------------
+IF @Type = 'Search'
+BEGIN
+SELECT * FROM [vw_Staff] 
+END
+--------------------------------------------------------------------------------------------------------------------------------------------------------------
+IF @Type = 'Find'
+BEGIN
+SELECT * FROM [vw_Staff] WHERE  ID = @ID
+END
+--------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+END
+
+
+GO
+/****** Object:  StoredProcedure [dbo].[tbl_User_Proc]    Script Date: 07/04/2024 9:49:10 pm ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -224,8 +276,9 @@ END
 END
 
 
+
 GO
-/****** Object:  Table [dbo].[tbl_Person]    Script Date: 02/04/2024 7:36:46 pm ******/
+/****** Object:  Table [dbo].[tbl_Person]    Script Date: 07/04/2024 9:49:10 pm ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -258,7 +311,7 @@ PRIMARY KEY CLUSTERED
 GO
 SET ANSI_PADDING OFF
 GO
-/****** Object:  Table [dbo].[tbl_ref_Position]    Script Date: 02/04/2024 7:36:46 pm ******/
+/****** Object:  Table [dbo].[tbl_ref_Position]    Script Date: 07/04/2024 9:49:10 pm ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -279,7 +332,7 @@ PRIMARY KEY CLUSTERED
 GO
 SET ANSI_PADDING OFF
 GO
-/****** Object:  Table [dbo].[tbl_Staff]    Script Date: 02/04/2024 7:36:46 pm ******/
+/****** Object:  Table [dbo].[tbl_Staff]    Script Date: 07/04/2024 9:49:10 pm ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -303,7 +356,7 @@ PRIMARY KEY CLUSTERED
 GO
 SET ANSI_PADDING OFF
 GO
-/****** Object:  Table [dbo].[tbl_User]    Script Date: 02/04/2024 7:36:46 pm ******/
+/****** Object:  Table [dbo].[tbl_User]    Script Date: 07/04/2024 9:49:10 pm ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -328,6 +381,24 @@ CREATE TABLE [dbo].[tbl_User](
 GO
 SET ANSI_PADDING OFF
 GO
+/****** Object:  View [dbo].[vw_Staff]    Script Date: 07/04/2024 9:49:10 pm ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE VIEW [dbo].[vw_Staff]
+as
+SELECT st.[ID]
+      ,st.[Name]
+      ,st.[Position]
+	  ,PositionName = p.Position
+      ,st.[Instated]
+      ,st.[Active]
+      ,st.[Encoder]
+      ,st.[Timestamp]
+  FROM [tbl_Staff] st
+  LEFT JOIN tbl_ref_Position p ON p.ID = st.Position
+GO
 SET IDENTITY_INSERT [dbo].[tbl_Person] ON 
 
 GO
@@ -343,6 +414,15 @@ GO
 INSERT [dbo].[tbl_ref_Position] ([ID], [Position], [Encoder], [Timestamp]) VALUES (1, N'Punong Barangay', NULL, CAST(0x0000B1460142CC2E AS DateTime))
 GO
 SET IDENTITY_INSERT [dbo].[tbl_ref_Position] OFF
+GO
+SET IDENTITY_INSERT [dbo].[tbl_Staff] ON 
+
+GO
+INSERT [dbo].[tbl_Staff] ([ID], [Name], [Position], [Instated], [Active], [Encoder], [Timestamp]) VALUES (1, N'ADRIAN ARANILLA JASPIO', 1, CAST(0x0000B14B00000000 AS DateTime), 1, 1, CAST(0x0000B14B01111058 AS DateTime))
+GO
+INSERT [dbo].[tbl_Staff] ([ID], [Name], [Position], [Instated], [Active], [Encoder], [Timestamp]) VALUES (2, N'Margerie Sidron Jaspio', 1, CAST(0x0000B14B00000000 AS DateTime), 1, 1, CAST(0x0000B14B01550938 AS DateTime))
+GO
+SET IDENTITY_INSERT [dbo].[tbl_Staff] OFF
 GO
 SET IDENTITY_INSERT [dbo].[tbl_User] ON 
 

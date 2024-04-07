@@ -1,0 +1,33 @@
+@using BrgyIS.Models
+@model tbl_Staff
+@{
+
+}
+
+@using (Ajax.BeginForm("Edit", "Staff", new AjaxOptions { HttpMethod = "POST", OnSuccess = "cbSuccess" }))
+{
+    <div class="modal-header">
+        <h1 class="modal-title fs-5" id="createModalLabel">Update record</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+    </div>
+    <div class="modal-body">
+        <div id="_cbReturned"></div>
+        <div class="row g-2">
+            @Html.HiddenFor(model => model.ID)
+            @Html.Partial("Field")
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="submit" class="btn btn-primary">Save record</button>
+    </div>
+}
+
+@Scripts.Render("~/bundles/jqueryval")
+<script>
+    var cbSuccess = (d) => {
+        model.table.ajax.reload(null, false);
+        $('#_cbReturned').html(`<p class="alert alert-${d.Status == true ? 'success' : 'danger'}"><i class="fa ${d.Status == true ? 'fa-info-circle' : 'fa-circle-exclamation'}"></i> ${d.Message}</p>`);
+        $('#_cbReturned').fadeIn('fast').delay(3000).fadeOut();
+    }
+</script>

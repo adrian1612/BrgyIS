@@ -5,6 +5,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Data;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc;
 
 namespace BrgyIS.Models
 {
@@ -41,6 +42,11 @@ namespace BrgyIS.Models
 
                 return r;
             }).ToList();
+        }
+
+        public SelectList ListPosition()
+        {
+            return new SelectList(List(), "ID", "Position");
         }
 
         public tbl_ref_Position Find(int ID)

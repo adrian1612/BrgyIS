@@ -161,6 +161,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\PersonController.cs" />
     <Compile Include="Controllers\PositionController.cs" />
+    <Compile Include="Controllers\StaffController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -174,6 +175,7 @@
     </Compile>
     <Compile Include="Models\tbl_Person.cs" />
     <Compile Include="Models\tbl_ref_Position.cs" />
+    <Compile Include="Models\tbl_Staff.cs" />
     <Compile Include="Models\tbl_User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -1197,6 +1199,10 @@
     <Content Include="Views\Position\Edit.cshtml" />
     <Content Include="Views\Position\Field.cshtml" />
     <Content Include="Views\Position\Index.cshtml" />
+    <Content Include="Views\Staff\Create.cshtml" />
+    <Content Include="Views\Staff\Edit.cshtml" />
+    <Content Include="Views\Staff\Field.cshtml" />
+    <Content Include="Views\Staff\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
