@@ -25,6 +25,12 @@ namespace BrgyIS.Models
         [Required]
         public String lname { get; set; }
 
+        [Display(Name = "Family Head")]
+        public int FamilyHead { get; set; }
+
+        [Display(Name = "Family Head")]
+        public string FamilyHeadName { get; set; }
+
         [Display(Name = "Date of Birth")]
         [Required]
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy-MM-dd}")]
@@ -45,7 +51,8 @@ namespace BrgyIS.Models
         public String Occupation { get; set; }
 
         [Display(Name = "PWD")]
-        public Boolean? isPWD { get; set; }
+        [DataType("checkbox")]
+        public Boolean isPWD { get; set; }
 
         [Display(Name = "Relationship")]
         public String RelationshipToHead { get; set; }
