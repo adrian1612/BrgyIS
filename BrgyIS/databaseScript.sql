@@ -1,11 +1,11 @@
 ﻿USE [master]
 GO
-/****** Object:  Database [dbBrgyIS]    Script Date: 07/04/2024 9:49:10 pm ******/
+/****** Object:  Database [dbBrgyIS]    Script Date: 10/04/2024 7:24:54 pm ******/
 CREATE DATABASE [dbBrgyIS]
 GO
 USE [dbBrgyIS]
 GO
-/****** Object:  StoredProcedure [dbo].[tbl_Person_Proc]    Script Date: 07/04/2024 9:49:10 pm ******/
+/****** Object:  StoredProcedure [dbo].[tbl_Person_Proc]    Script Date: 10/04/2024 7:24:54 pm ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -17,6 +17,7 @@ CREATE PROCEDURE [dbo].[tbl_Person_Proc]
 @fname varchar(max) = null,
 @mn varchar(max) = null,
 @lname varchar(max) = null,
+@FamilyHead INT = null,
 @bday datetime = null,
 @gender varchar(max) = null,
 @CivilStatus varchar(max) = null,
@@ -34,9 +35,9 @@ BEGIN
 IF @Type = 'Create'
 BEGIN
 INSERT INTO [tbl_Person]
-([fname],[mn],[lname],[bday],[gender],[CivilStatus],[ShelterType],[Occupation],[isPWD],[RelationshipToHead],[StNo],[Address],[Remarks],[Encoder])
+([fname],[mn],[lname],FamilyHead,[bday],[gender],[CivilStatus],[ShelterType],[Occupation],[isPWD],[RelationshipToHead],[StNo],[Address],[Remarks],[Encoder])
 VALUES
-(@fname,@mn,@lname,@bday,@gender,@CivilStatus,@ShelterType,@Occupation,@isPWD,@RelationshipToHead,@StNo,@Address,@Remarks,@Encoder)
+(@fname,@mn,@lname,@FamilyHead,@bday,@gender,@CivilStatus,@ShelterType,@Occupation,@isPWD,@RelationshipToHead,@StNo,@Address,@Remarks,@Encoder)
 
 END
 --------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -45,6 +46,7 @@ BEGIN
 UPDATE [tbl_Person] SET [fname] = @fname
 ,[mn] = @mn
 ,[lname] = @lname
+,FamilyHead = @FamilyHead
 ,[bday] = @bday
 ,[gender] = @gender
 ,[CivilStatus] = @CivilStatus
@@ -60,12 +62,12 @@ END
 --------------------------------------------------------------------------------------------------------------------------------------------------------------
 IF @Type = 'Search'
 BEGIN
-SELECT * FROM [tbl_Person] 
+SELECT * FROM [vw_Person] 
 END
 --------------------------------------------------------------------------------------------------------------------------------------------------------------
 IF @Type = 'Find'
 BEGIN
-SELECT * FROM [tbl_Person] WHERE  ID = @ID
+SELECT * FROM [vw_Person] WHERE  ID = @ID
 END
 --------------------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -76,7 +78,7 @@ END
 
 
 GO
-/****** Object:  StoredProcedure [dbo].[tbl_ref_Position_Proc]    Script Date: 07/04/2024 9:49:10 pm ******/
+/****** Object:  StoredProcedure [dbo].[tbl_ref_Position_Proc]    Script Date: 10/04/2024 7:24:54 pm ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -136,7 +138,7 @@ END
 
 
 GO
-/****** Object:  StoredProcedure [dbo].[tbl_Staff_Proc]    Script Date: 07/04/2024 9:49:10 pm ******/
+/****** Object:  StoredProcedure [dbo].[tbl_Staff_Proc]    Script Date: 10/04/2024 7:24:54 pm ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -186,7 +188,7 @@ END
 
 
 GO
-/****** Object:  StoredProcedure [dbo].[tbl_User_Proc]    Script Date: 07/04/2024 9:49:10 pm ******/
+/****** Object:  StoredProcedure [dbo].[tbl_User_Proc]    Script Date: 10/04/2024 7:24:54 pm ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -278,7 +280,7 @@ END
 
 
 GO
-/****** Object:  Table [dbo].[tbl_Person]    Script Date: 07/04/2024 9:49:10 pm ******/
+/****** Object:  Table [dbo].[tbl_Person]    Script Date: 10/04/2024 7:24:54 pm ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -290,6 +292,7 @@ CREATE TABLE [dbo].[tbl_Person](
 	[fname] [varchar](max) NULL,
 	[mn] [varchar](max) NULL,
 	[lname] [varchar](max) NULL,
+	[FamilyHead] [int] NULL,
 	[bday] [datetime] NULL,
 	[gender] [varchar](max) NULL,
 	[CivilStatus] [varchar](max) NULL,
@@ -302,7 +305,7 @@ CREATE TABLE [dbo].[tbl_Person](
 	[Remarks] [varchar](max) NULL,
 	[Encoder] [int] NULL,
 	[Timestamp] [datetime] NULL,
-PRIMARY KEY CLUSTERED 
+ CONSTRAINT [PK__tbl_Pers__3214EC272CFE972E] PRIMARY KEY CLUSTERED 
 (
 	[ID] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
@@ -311,7 +314,7 @@ PRIMARY KEY CLUSTERED
 GO
 SET ANSI_PADDING OFF
 GO
-/****** Object:  Table [dbo].[tbl_ref_Position]    Script Date: 07/04/2024 9:49:10 pm ******/
+/****** Object:  Table [dbo].[tbl_ref_Position]    Script Date: 10/04/2024 7:24:54 pm ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -332,7 +335,7 @@ PRIMARY KEY CLUSTERED
 GO
 SET ANSI_PADDING OFF
 GO
-/****** Object:  Table [dbo].[tbl_Staff]    Script Date: 07/04/2024 9:49:10 pm ******/
+/****** Object:  Table [dbo].[tbl_Staff]    Script Date: 10/04/2024 7:24:54 pm ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -356,7 +359,7 @@ PRIMARY KEY CLUSTERED
 GO
 SET ANSI_PADDING OFF
 GO
-/****** Object:  Table [dbo].[tbl_User]    Script Date: 07/04/2024 9:49:10 pm ******/
+/****** Object:  Table [dbo].[tbl_User]    Script Date: 10/04/2024 7:24:54 pm ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -381,7 +384,36 @@ CREATE TABLE [dbo].[tbl_User](
 GO
 SET ANSI_PADDING OFF
 GO
-/****** Object:  View [dbo].[vw_Staff]    Script Date: 07/04/2024 9:49:10 pm ******/
+/****** Object:  View [dbo].[vw_Person]    Script Date: 10/04/2024 7:24:54 pm ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE VIEW [dbo].[vw_Person]
+AS
+SELECT p.[ID]
+      ,p.[fname]
+      ,p.[mn]
+      ,p.[lname]
+	  ,p.FamilyHead
+	  ,FamilyHeadName = CONCAT(h.fname, ' ', h.mn, ' ', h.lname)
+      ,p.[bday]
+      ,p.[gender]
+      ,p.[CivilStatus]
+      ,p.[ShelterType]
+      ,p.[Occupation]
+      ,p.[isPWD]
+      ,p.[RelationshipToHead]
+      ,p.[StNo]
+      ,p.[Address]
+      ,p.[Remarks]
+      ,p.[Encoder]
+      ,p.[Timestamp]
+  FROM [tbl_Person] p LEFT JOIN tbl_Person h ON h.ID = p.FamilyHead
+
+GO
+/****** Object:  View [dbo].[vw_Staff]    Script Date: 10/04/2024 7:24:54 pm ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -402,9 +434,9 @@ GO
 SET IDENTITY_INSERT [dbo].[tbl_Person] ON 
 
 GO
-INSERT [dbo].[tbl_Person] ([ID], [fname], [mn], [lname], [bday], [gender], [CivilStatus], [ShelterType], [Occupation], [isPWD], [RelationshipToHead], [StNo], [Address], [Remarks], [Encoder], [Timestamp]) VALUES (1, N'adrian', N'Aranilla', N'Jaspio', CAST(0x000086D600000000 AS DateTime), N'Male', N'Married', N'Rented', N'Computer Programmer', 0, N'Head of the Family', N'Kahusayan st', N'Pamana Homes sub kahusayan st, brgy bucal', NULL, NULL, NULL)
+INSERT [dbo].[tbl_Person] ([ID], [fname], [mn], [lname], [FamilyHead], [bday], [gender], [CivilStatus], [ShelterType], [Occupation], [isPWD], [RelationshipToHead], [StNo], [Address], [Remarks], [Encoder], [Timestamp]) VALUES (1, N'adrian', N'Aranilla', N'Jaspio', NULL, CAST(0x000086D600000000 AS DateTime), N'Male', N'Married', N'Rented', N'Computer Programmer', 1, N'Head of the Family', N'Kahusayan st', N'Pamana Homes sub kahusayan st, brgy bucal', NULL, NULL, NULL)
 GO
-INSERT [dbo].[tbl_Person] ([ID], [fname], [mn], [lname], [bday], [gender], [CivilStatus], [ShelterType], [Occupation], [isPWD], [RelationshipToHead], [StNo], [Address], [Remarks], [Encoder], [Timestamp]) VALUES (2, N'Margerie', N'Sidron', N'Jaspio', CAST(0x000086C200000000 AS DateTime), N'Female', N'Married', N'Rented', N'Fisheries Technician', 0, N'Wife', N'Kahusayan st.', NULL, NULL, 1, CAST(0x0000B14101190FF4 AS DateTime))
+INSERT [dbo].[tbl_Person] ([ID], [fname], [mn], [lname], [FamilyHead], [bday], [gender], [CivilStatus], [ShelterType], [Occupation], [isPWD], [RelationshipToHead], [StNo], [Address], [Remarks], [Encoder], [Timestamp]) VALUES (2, N'Margerie', N'Sidron', N'Jaspio', 1, CAST(0x000086C200000000 AS DateTime), N'Female', N'Married', N'Rented', N'Fisheries Technician', 0, N'Wife', N'Kahusayan st.', NULL, NULL, 1, CAST(0x0000B14101190FF4 AS DateTime))
 GO
 SET IDENTITY_INSERT [dbo].[tbl_Person] OFF
 GO
@@ -431,7 +463,7 @@ INSERT [dbo].[tbl_User] ([ID], [Username], [Password], [Role], [Active], [fname]
 GO
 SET IDENTITY_INSERT [dbo].[tbl_User] OFF
 GO
-ALTER TABLE [dbo].[tbl_Person] ADD  DEFAULT (getdate()) FOR [Timestamp]
+ALTER TABLE [dbo].[tbl_Person] ADD  CONSTRAINT [DF__tbl_Perso__Times__182C9B23]  DEFAULT (getdate()) FOR [Timestamp]
 GO
 ALTER TABLE [dbo].[tbl_ref_Position] ADD  DEFAULT (getdate()) FOR [Timestamp]
 GO
