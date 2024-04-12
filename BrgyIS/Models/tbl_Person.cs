@@ -5,6 +5,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Data;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc;
 
 namespace BrgyIS.Models
 {
@@ -25,8 +26,10 @@ namespace BrgyIS.Models
         [Required]
         public String lname { get; set; }
 
+        public string Fullname { get; set; }
+
         [Display(Name = "Family Head")]
-        public int FamilyHead { get; set; }
+        public int? FamilyHead { get; set; }
 
         [Display(Name = "Family Head")]
         public string FamilyHeadName { get; set; }
@@ -88,6 +91,16 @@ namespace BrgyIS.Models
             }).ToList();
         }
 
+        public SelectList ListPerson()
+        {
+            return new SelectList(List(), "ID", "Fullname");
+        }
+
+        public SelectList ListPerson(int? PersonID)
+        {
+            return new SelectList(List().Where(f => f.ID != PersonID), "ID", "Fullname");
+        }
+
         public tbl_Person Find(int ID)
         {
 
@@ -107,6 +120,7 @@ namespace BrgyIS.Models
                 p.Add("@fname", obj.fname);
                 p.Add("@mn", obj.mn);
                 p.Add("@lname", obj.lname);
+                p.Add("@FamilyHead", obj.FamilyHead);
                 p.Add("@bday", obj.bday);
                 p.Add("@gender", obj.gender);
                 p.Add("@CivilStatus", obj.CivilStatus);
@@ -131,6 +145,7 @@ namespace BrgyIS.Models
                 p.Add("@fname", obj.fname);
                 p.Add("@mn", obj.mn);
                 p.Add("@lname", obj.lname);
+                p.Add("@FamilyHead", obj.FamilyHead);
                 p.Add("@bday", obj.bday);
                 p.Add("@gender", obj.gender);
                 p.Add("@CivilStatus", obj.CivilStatus);

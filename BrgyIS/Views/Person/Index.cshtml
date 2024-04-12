@@ -28,9 +28,8 @@
             <thead>
                 <tr>
                     <th>ID</th>
-                    <th class="text-nowrap">First name</th>
-                    <th class="text-nowrap">Middle name</th>
-                    <th class="text-nowrap">Last name</th>
+                    <th class="text-nowrap">Fullname</th>
+                    <th class="text-nowrap">Family Head</th>
                     <th class="text-nowrap">Date of Birth</th>
                     <th class="text-nowrap">Gender</th>
                     <th class="text-nowrap">Civil Status</th>
@@ -47,9 +46,8 @@
             <tfoot>
                 <tr>
                     <th>ID</th>
-                    <th>First name</th>
-                    <th>Middle name</th>
-                    <th>Last name</th>
+                    <th>Fullname</th>
+                    <th>Family Head</th>
                     <th>Date of Birth</th>
                     <th>Gender</th>
                     <th>Civil Status</th>
@@ -103,7 +101,7 @@
                 }
             },
             ajax: { url: '@Url.Action("List", "Person", new { area = ""})' },
-            columns: [{ data: 'ID' }, { data: 'fname' }, { data: 'mn' }, { data: 'lname' }, { data: 'bday', render: (data) => { return moment(data).format('MMM DD, yyyy'); } }, { data: 'gender' }, { data: 'CivilStatus' }, { data: 'ShelterType' }, { data: 'Occupation' }, { data: 'isPWD' }, { data: 'RelationshipToHead' }, { data: 'StNo' }, { data: 'Address' }, { data: 'Remarks' },
+            columns: [{ data: 'ID' }, { data: 'Fullname' }, { data: 'FamilyHeadName' }, { data: 'bday', render: (data) => { return moment(data).format('MMM DD, yyyy'); } }, { data: 'gender' }, { data: 'CivilStatus' }, { data: 'ShelterType' }, { data: 'Occupation' }, { data: 'isPWD' }, { data: 'RelationshipToHead' }, { data: 'StNo' }, { data: 'Address' }, { data: 'Remarks' },
             {
                 data: 'ID',
                 render: (data) => { return `<a href='#' onclick="EditForm(${data})"><i class="fa fa-edit"></i></a>`; }

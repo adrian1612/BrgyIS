@@ -1,11 +1,11 @@
 ﻿USE [master]
 GO
-/****** Object:  Database [dbBrgyIS]    Script Date: 10/04/2024 7:24:54 pm ******/
+/****** Object:  Database [dbBrgyIS]    Script Date: 12/04/2024 9:34:06 pm ******/
 CREATE DATABASE [dbBrgyIS]
 GO
 USE [dbBrgyIS]
 GO
-/****** Object:  StoredProcedure [dbo].[tbl_Person_Proc]    Script Date: 10/04/2024 7:24:54 pm ******/
+/****** Object:  StoredProcedure [dbo].[tbl_Person_Proc]    Script Date: 12/04/2024 9:34:06 pm ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -78,7 +78,7 @@ END
 
 
 GO
-/****** Object:  StoredProcedure [dbo].[tbl_ref_Position_Proc]    Script Date: 10/04/2024 7:24:54 pm ******/
+/****** Object:  StoredProcedure [dbo].[tbl_ref_Position_Proc]    Script Date: 12/04/2024 9:34:06 pm ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -138,7 +138,7 @@ END
 
 
 GO
-/****** Object:  StoredProcedure [dbo].[tbl_Staff_Proc]    Script Date: 10/04/2024 7:24:54 pm ******/
+/****** Object:  StoredProcedure [dbo].[tbl_Staff_Proc]    Script Date: 12/04/2024 9:34:06 pm ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -188,7 +188,7 @@ END
 
 
 GO
-/****** Object:  StoredProcedure [dbo].[tbl_User_Proc]    Script Date: 10/04/2024 7:24:54 pm ******/
+/****** Object:  StoredProcedure [dbo].[tbl_User_Proc]    Script Date: 12/04/2024 9:34:06 pm ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -280,7 +280,7 @@ END
 
 
 GO
-/****** Object:  Table [dbo].[tbl_Person]    Script Date: 10/04/2024 7:24:54 pm ******/
+/****** Object:  Table [dbo].[tbl_Person]    Script Date: 12/04/2024 9:34:06 pm ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -314,7 +314,7 @@ CREATE TABLE [dbo].[tbl_Person](
 GO
 SET ANSI_PADDING OFF
 GO
-/****** Object:  Table [dbo].[tbl_ref_Position]    Script Date: 10/04/2024 7:24:54 pm ******/
+/****** Object:  Table [dbo].[tbl_ref_Position]    Script Date: 12/04/2024 9:34:06 pm ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -335,7 +335,7 @@ PRIMARY KEY CLUSTERED
 GO
 SET ANSI_PADDING OFF
 GO
-/****** Object:  Table [dbo].[tbl_Staff]    Script Date: 10/04/2024 7:24:54 pm ******/
+/****** Object:  Table [dbo].[tbl_Staff]    Script Date: 12/04/2024 9:34:06 pm ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -359,7 +359,7 @@ PRIMARY KEY CLUSTERED
 GO
 SET ANSI_PADDING OFF
 GO
-/****** Object:  Table [dbo].[tbl_User]    Script Date: 10/04/2024 7:24:54 pm ******/
+/****** Object:  Table [dbo].[tbl_User]    Script Date: 12/04/2024 9:34:06 pm ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -384,11 +384,13 @@ CREATE TABLE [dbo].[tbl_User](
 GO
 SET ANSI_PADDING OFF
 GO
-/****** Object:  View [dbo].[vw_Person]    Script Date: 10/04/2024 7:24:54 pm ******/
+/****** Object:  View [dbo].[vw_Person]    Script Date: 12/04/2024 9:34:06 pm ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
+
+
 
 CREATE VIEW [dbo].[vw_Person]
 AS
@@ -396,8 +398,9 @@ SELECT p.[ID]
       ,p.[fname]
       ,p.[mn]
       ,p.[lname]
+	  ,Fullname = UPPER(CONCAT(p.fname, ' ', CASE WHEN p.mn IS NULL THEN '' ELSE p.mn END, ' ', p.lname))
 	  ,p.FamilyHead
-	  ,FamilyHeadName = CONCAT(h.fname, ' ', h.mn, ' ', h.lname)
+	  ,FamilyHeadName = (CASE WHEN (SELECT COUNT(*) FROM tbl_Person ep WHERE p.ID = ep.FamilyHead) >= 1 THEN 'I am the head' ELSE UPPER(CONCAT(h.fname, ' ', h.mn, ' ', h.lname)) END) 
       ,p.[bday]
       ,p.[gender]
       ,p.[CivilStatus]
@@ -412,8 +415,10 @@ SELECT p.[ID]
       ,p.[Timestamp]
   FROM [tbl_Person] p LEFT JOIN tbl_Person h ON h.ID = p.FamilyHead
 
+
+
 GO
-/****** Object:  View [dbo].[vw_Staff]    Script Date: 10/04/2024 7:24:54 pm ******/
+/****** Object:  View [dbo].[vw_Staff]    Script Date: 12/04/2024 9:34:06 pm ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -434,7 +439,7 @@ GO
 SET IDENTITY_INSERT [dbo].[tbl_Person] ON 
 
 GO
-INSERT [dbo].[tbl_Person] ([ID], [fname], [mn], [lname], [FamilyHead], [bday], [gender], [CivilStatus], [ShelterType], [Occupation], [isPWD], [RelationshipToHead], [StNo], [Address], [Remarks], [Encoder], [Timestamp]) VALUES (1, N'adrian', N'Aranilla', N'Jaspio', NULL, CAST(0x000086D600000000 AS DateTime), N'Male', N'Married', N'Rented', N'Computer Programmer', 1, N'Head of the Family', N'Kahusayan st', N'Pamana Homes sub kahusayan st, brgy bucal', NULL, NULL, NULL)
+INSERT [dbo].[tbl_Person] ([ID], [fname], [mn], [lname], [FamilyHead], [bday], [gender], [CivilStatus], [ShelterType], [Occupation], [isPWD], [RelationshipToHead], [StNo], [Address], [Remarks], [Encoder], [Timestamp]) VALUES (1, N'Adrian', N'Aranilla', N'Jaspio', NULL, CAST(0x000086D600000000 AS DateTime), N'Male', N'Married', N'Rented', N'Computer Programmer', 1, N'Head of the Family', N'Kahusayan st', N'Pamana Homes sub kahusayan st, brgy bucal', NULL, NULL, NULL)
 GO
 INSERT [dbo].[tbl_Person] ([ID], [fname], [mn], [lname], [FamilyHead], [bday], [gender], [CivilStatus], [ShelterType], [Occupation], [isPWD], [RelationshipToHead], [StNo], [Address], [Remarks], [Encoder], [Timestamp]) VALUES (2, N'Margerie', N'Sidron', N'Jaspio', 1, CAST(0x000086C200000000 AS DateTime), N'Female', N'Married', N'Rented', N'Fisheries Technician', 0, N'Wife', N'Kahusayan st.', NULL, NULL, 1, CAST(0x0000B14101190FF4 AS DateTime))
 GO
@@ -445,6 +450,8 @@ SET IDENTITY_INSERT [dbo].[tbl_ref_Position] ON
 GO
 INSERT [dbo].[tbl_ref_Position] ([ID], [Position], [Encoder], [Timestamp]) VALUES (1, N'Punong Barangay', NULL, CAST(0x0000B1460142CC2E AS DateTime))
 GO
+INSERT [dbo].[tbl_ref_Position] ([ID], [Position], [Encoder], [Timestamp]) VALUES (2, N'Secretary', 1, CAST(0x0000B15001631FE9 AS DateTime))
+GO
 SET IDENTITY_INSERT [dbo].[tbl_ref_Position] OFF
 GO
 SET IDENTITY_INSERT [dbo].[tbl_Staff] ON 
@@ -452,7 +459,7 @@ SET IDENTITY_INSERT [dbo].[tbl_Staff] ON
 GO
 INSERT [dbo].[tbl_Staff] ([ID], [Name], [Position], [Instated], [Active], [Encoder], [Timestamp]) VALUES (1, N'ADRIAN ARANILLA JASPIO', 1, CAST(0x0000B14B00000000 AS DateTime), 1, 1, CAST(0x0000B14B01111058 AS DateTime))
 GO
-INSERT [dbo].[tbl_Staff] ([ID], [Name], [Position], [Instated], [Active], [Encoder], [Timestamp]) VALUES (2, N'Margerie Sidron Jaspio', 1, CAST(0x0000B14B00000000 AS DateTime), 1, 1, CAST(0x0000B14B01550938 AS DateTime))
+INSERT [dbo].[tbl_Staff] ([ID], [Name], [Position], [Instated], [Active], [Encoder], [Timestamp]) VALUES (2, N'Margerie Sidron Jaspio', 2, CAST(0x0000B14B00000000 AS DateTime), 1, 1, CAST(0x0000B14B01550938 AS DateTime))
 GO
 SET IDENTITY_INSERT [dbo].[tbl_Staff] OFF
 GO
