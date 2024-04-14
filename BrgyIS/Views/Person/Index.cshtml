@@ -20,11 +20,11 @@
         <div class="row row-cols-lg-auto g-1 align-items-center mt-3">
             <div class="col" aria-action="Add">
                 <p>
-                    <a href="#" onclick="CreateForm()"><i class="fa fa-plus-circle"></i> New record</a>
+                    <a href="#" data-bind="click: NewData"><i class="fa fa-plus-circle"></i> New record</a>
                 </p>
             </div>
         </div>
-        <table id="data" class="table table-light table-hover table-striped table-bordered" style="font-size:0.9rem; with:100%;">
+        <table id="data" data-bind="with: Collection" class="table table-light table-hover table-striped table-bordered" style="font-size:0.9rem; with:100%;">
             <thead>
                 <tr>
                     <th>ID</th>
@@ -40,9 +40,31 @@
                     <th class="text-nowrap">St. No</th>
                     <th class="text-nowrap">Address</th>
                     <th class="text-nowrap">Remarks</th>
-                    <th></th>
                 </tr>
             </thead>
+            <tbody data-bind="foreach: $data">
+                <tr>
+                    <td><span data-bind="text: ID"></span></td>
+                    <td class="text-nowrap">
+                        <span data-bind="text: Fullname"></span> <br />
+                        <span class="text-nowrap">
+                            <a href="#" data-bind="click: $root.EditData"><i class="fa fa-edit"></i></a>
+                            <a href="#" data-bind="click: $root.select"><i class="fa fa-stamp"></i></a>
+                        </span>
+                    </td>
+                    <td><span data-bind="text: FamilyHeadName"></span></td>
+                    <td><span data-bind="text: moment(bday).format('MMMM-DD-YYYY')"></span></td>
+                    <td><span data-bind="text: gender"></span></td>
+                    <td><span data-bind="text: CivilStatus"></span></td>
+                    <td><span data-bind="text: ShelterType"></span></td>
+                    <td><span data-bind="text: Occupation"></span></td>
+                    <td><span data-bind="text: isPWD"></span></td>
+                    <td><span data-bind="text: RelationshipToHead"></span></td>
+                    <td><span data-bind="text: StNo"></span></td>
+                    <td><span data-bind="text: Address"></span></td>
+                    <td><span data-bind="text: Remarks"></span></td>
+                </tr>
+            </tbody>
             <tfoot>
                 <tr>
                     <th>ID</th>
@@ -58,7 +80,6 @@
                     <th>St. No</th>
                     <th>Address</th>
                     <th>Remarks</th>
-                    <th></th>
                 </tr>
             </tfoot>
         </table>
@@ -66,10 +87,41 @@
 </div>
 
 
-<div class="modal fade" id="actionModal" aria-labelledby="actionModalLabel" aria-hidden="true">
+<div class="modal fade" id="actionModal">
+    <div class="modal-dialog modal-dialog-centered">
+        <div data-bind="html: Content" class="modal-content">
+            
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="FormsModal">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
-            
+            @using (Html.BeginForm("GenerateForms", "Person", new { area = "" }, FormMethod.Post, new { target = "_blank" }))
+            {
+                <div class="modal-header">
+                    Generate Form
+                </div>
+                <div class="modal-body">
+                    <input type="hidden" data-bind="value: SelectedID" name="ID" />
+                    <div class="row mb-3">
+                        <label class="col-md-4 col-form-label">Select Form</label>
+                        <div class="col-md-8">
+                            <select name="Type" required class="form-select">
+                                <option value="">Select Option</option>
+                                <!--ko foreach: [{ID: 0, Description: 'Brgy. Clearance'},{ID: 1, Description: 'Cedula'},{ID: 2, Description: 'Certificate of Residency'}]-->
+                                <option data-bind="attr: {value: ID}, text: Description"></option>
+                                <!--/ko-->
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </div>
+            }
         </div>
     </div>
 </div>
@@ -78,38 +130,55 @@
 @section scripts {
     <script>
 
-        var CreateForm = () => {
-            $.get('@Url.Action("Create", "Person", new { area = "" })', null, (d) => {
-                $('#actionModal .modal-content').html(d);
-                $('#actionModal').modal('show');
-            });
+        function PersonModel() {
+            var self = this;
+            self.Content = ko.observable(null);
+            self.Collection = ko.observableArray();
+            self.SelectedID = ko.observable();
+            self.table = null;
+
+            self.select = (d) => {
+                self.SelectedID(d.ID);
+                $('#FormsModal').modal('show');
+            }
+
+            self.NewData = () => {
+                $.get('@Url.Action("Create", "Person", new { area = "" })', null, (d) => {
+                    self.Content(d);
+                    $('#actionModal').modal('show');
+                });
+            }
+
+            self.EditData = (m) => {
+                $.get('@Url.Action("Edit", "Person", new { area = "" })', { ID: m.ID }, (d) => {
+                    self.Content(d);
+                    $('#actionModal').modal('show');
+                });
+            }
+
+            self.loadData = () => {
+                $.get('@Url.Action("List", "Person", new { area = ""})', null, (d) => {
+                    self.Collection(d.data);
+                    if (self.table !== null)
+                        self.table.destroy();
+                    self.table = $('#data').DataTable({
+                        responsive: true,
+                        layout: {
+                            top: {
+                                buttons: [{ extend: 'print', exportOptions: { columns: ':visible' } }, { extend: 'excel', exportOptions: { columns: ':visible' } }, { extend: 'colvis', exportOptions: { columns: ':visible' } }]
+                            }
+                        },
+                        ordering: false,
+                        searching: true,
+                        stateSave: true
+                    });
+                });
+            }
+            self.loadData();
         }
 
-        var EditForm = (ID) => {
-            $.get(`@Url.Action("Edit", "Person", new { area = "" })?ID=${ID}`, null, (d) => {
-                $('#actionModal .modal-content').html(d);
-                $('#actionModal').modal('show');
-            });
-        }
-
-        var table = $('#data').DataTable({
-            select: {items: 'row',info: false},
-            responsive: true,
-            layout: {
-                top: {
-                    buttons: [{ extend: 'print', exportOptions: { columns: ':visible' } }, { extend: 'excel', exportOptions: { columns: ':visible' } }, { extend: 'colvis', exportOptions: { columns: ':visible' } }]
-                }
-            },
-            ajax: { url: '@Url.Action("List", "Person", new { area = ""})' },
-            columns: [{ data: 'ID' }, { data: 'Fullname' }, { data: 'FamilyHeadName' }, { data: 'bday', render: (data) => { return moment(data).format('MMM DD, yyyy'); } }, { data: 'gender' }, { data: 'CivilStatus' }, { data: 'ShelterType' }, { data: 'Occupation' }, { data: 'isPWD' }, { data: 'RelationshipToHead' }, { data: 'StNo' }, { data: 'Address' }, { data: 'Remarks' },
-            {
-                data: 'ID',
-                render: (data) => { return `<a href='#' onclick="EditForm(${data})"><i class="fa fa-edit"></i></a>`; }
-            }],
-            ordering: false,
-            searching: true,
-            stateSave: true
-        });
+        var model = new PersonModel();
+        ko.applyBindings(model);
 
     </script>
 }

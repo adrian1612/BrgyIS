@@ -91,6 +91,17 @@ namespace BrgyIS.Models
             }).ToList();
         }
 
+        public List<tbl_Person> List(int ID)
+        {
+
+            return s.Query<tbl_Person>("tbl_Person_Proc", p => { p.Add("@Type", "Find"); p.Add("@ID", ID); }, CommandType.StoredProcedure)
+            .Select(r =>
+            {
+
+                return r;
+            }).ToList();
+        }
+
         public SelectList ListPerson()
         {
             return new SelectList(List(), "ID", "Fullname");
@@ -168,5 +179,10 @@ namespace BrgyIS.Models
         }
     }
 
-
+    public enum FormType
+    {
+        BrgyClearance,
+        Cedula,
+        CertificateOfResidency
+    }
 }

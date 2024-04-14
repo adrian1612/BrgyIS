@@ -1,4 +1,5 @@
 using BrgyIS.Models;
+using Microsoft.Reporting.WebForms;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -93,6 +94,20 @@ namespace BrgyIS.Models
         {
             m.Delete(m);
             return RedirectToAction("Index");
+        }
+
+        //---------------------REPORT-----------------------------------------------------------
+
+        [HttpPost]
+        public ActionResult GenerateForms(int ID, FormType Type)
+        {
+            var ReportsAndFilename = Enum.GetName(typeof(FormType), Type);
+            var Item = mod.List(ID);
+            Tool.ReportWrapper($"~/Reports/Forms/{ReportsAndFilename}.rdlc", ReportsAndFilename, ReportFormat.PDF, (d, p) =>
+            {
+                d.Add(new ReportDataSource("data", Item));
+            });
+            return View();
         }
     }
 }

@@ -26,7 +26,7 @@
 @Scripts.Render("~/bundles/jqueryval")
 <script>
     var cbSuccess = (d) => {
-        table.ajax.reload(null, false);
+        model.loadData();
         $('#_cbReturned').html(`<p class="alert alert-${d.Status ? 'success' : 'danger'}"><i class="fa ${d.Status == true ? 'fa-info-circle' : 'fa-circle-exclamation'}"></i> ${d.Message}</p>`);
         $('#_cbReturned').fadeIn('fast').delay(3000).fadeOut();
     }
