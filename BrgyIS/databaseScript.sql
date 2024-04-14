@@ -1,11 +1,11 @@
 ﻿USE [master]
 GO
-/****** Object:  Database [dbBrgyIS]    Script Date: 12/04/2024 9:34:06 pm ******/
+/****** Object:  Database [dbBrgyIS]    Script Date: 14/04/2024 8:06:10 pm ******/
 CREATE DATABASE [dbBrgyIS]
 GO
 USE [dbBrgyIS]
 GO
-/****** Object:  StoredProcedure [dbo].[tbl_Person_Proc]    Script Date: 12/04/2024 9:34:06 pm ******/
+/****** Object:  StoredProcedure [dbo].[tbl_Person_Proc]    Script Date: 14/04/2024 8:06:10 pm ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -78,7 +78,7 @@ END
 
 
 GO
-/****** Object:  StoredProcedure [dbo].[tbl_ref_Position_Proc]    Script Date: 12/04/2024 9:34:06 pm ******/
+/****** Object:  StoredProcedure [dbo].[tbl_ref_Position_Proc]    Script Date: 14/04/2024 8:06:10 pm ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -138,7 +138,7 @@ END
 
 
 GO
-/****** Object:  StoredProcedure [dbo].[tbl_Staff_Proc]    Script Date: 12/04/2024 9:34:06 pm ******/
+/****** Object:  StoredProcedure [dbo].[tbl_Staff_Proc]    Script Date: 14/04/2024 8:06:10 pm ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -147,7 +147,7 @@ CREATE PROCEDURE [dbo].[tbl_Staff_Proc]
 @Type VARCHAR(50),
 @Search VARCHAR(max) = null,
 @ID int = null,
-@Name varchar(max) = null,
+@Name INT = null,
 @Position int = null,
 @Instated datetime = null,
 @Active bit = null,
@@ -188,7 +188,7 @@ END
 
 
 GO
-/****** Object:  StoredProcedure [dbo].[tbl_User_Proc]    Script Date: 12/04/2024 9:34:06 pm ******/
+/****** Object:  StoredProcedure [dbo].[tbl_User_Proc]    Script Date: 14/04/2024 8:06:10 pm ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -280,7 +280,7 @@ END
 
 
 GO
-/****** Object:  Table [dbo].[tbl_Person]    Script Date: 12/04/2024 9:34:06 pm ******/
+/****** Object:  Table [dbo].[tbl_Person]    Script Date: 14/04/2024 8:06:10 pm ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -314,7 +314,7 @@ CREATE TABLE [dbo].[tbl_Person](
 GO
 SET ANSI_PADDING OFF
 GO
-/****** Object:  Table [dbo].[tbl_ref_Position]    Script Date: 12/04/2024 9:34:06 pm ******/
+/****** Object:  Table [dbo].[tbl_ref_Position]    Script Date: 14/04/2024 8:06:10 pm ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -335,31 +335,27 @@ PRIMARY KEY CLUSTERED
 GO
 SET ANSI_PADDING OFF
 GO
-/****** Object:  Table [dbo].[tbl_Staff]    Script Date: 12/04/2024 9:34:06 pm ******/
+/****** Object:  Table [dbo].[tbl_Staff]    Script Date: 14/04/2024 8:06:10 pm ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-SET ANSI_PADDING ON
-GO
 CREATE TABLE [dbo].[tbl_Staff](
 	[ID] [int] IDENTITY(1,1) NOT NULL,
-	[Name] [varchar](max) NULL,
+	[Name] [int] NULL,
 	[Position] [int] NULL,
 	[Instated] [datetime] NULL,
 	[Active] [bit] NULL,
 	[Encoder] [int] NULL,
 	[Timestamp] [datetime] NULL,
-PRIMARY KEY CLUSTERED 
+ CONSTRAINT [PK__tbl_Staf__3214EC275498A3BE] PRIMARY KEY CLUSTERED 
 (
 	[ID] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
-) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+) ON [PRIMARY]
 
 GO
-SET ANSI_PADDING OFF
-GO
-/****** Object:  Table [dbo].[tbl_User]    Script Date: 12/04/2024 9:34:06 pm ******/
+/****** Object:  Table [dbo].[tbl_User]    Script Date: 14/04/2024 8:06:10 pm ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -384,7 +380,7 @@ CREATE TABLE [dbo].[tbl_User](
 GO
 SET ANSI_PADDING OFF
 GO
-/****** Object:  View [dbo].[vw_Person]    Script Date: 12/04/2024 9:34:06 pm ******/
+/****** Object:  View [dbo].[vw_Person]    Script Date: 14/04/2024 8:06:10 pm ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -418,15 +414,17 @@ SELECT p.[ID]
 
 
 GO
-/****** Object:  View [dbo].[vw_Staff]    Script Date: 12/04/2024 9:34:06 pm ******/
+/****** Object:  View [dbo].[vw_Staff]    Script Date: 14/04/2024 8:06:10 pm ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
+
 CREATE VIEW [dbo].[vw_Staff]
 as
 SELECT st.[ID]
       ,st.[Name]
+	  ,OfficialName = ps.Fullname
       ,st.[Position]
 	  ,PositionName = p.Position
       ,st.[Instated]
@@ -435,6 +433,8 @@ SELECT st.[ID]
       ,st.[Timestamp]
   FROM [tbl_Staff] st
   LEFT JOIN tbl_ref_Position p ON p.ID = st.Position
+  LEFT JOIN vw_Person ps ON ps.ID = st.Name
+
 GO
 SET IDENTITY_INSERT [dbo].[tbl_Person] ON 
 
@@ -457,9 +457,9 @@ GO
 SET IDENTITY_INSERT [dbo].[tbl_Staff] ON 
 
 GO
-INSERT [dbo].[tbl_Staff] ([ID], [Name], [Position], [Instated], [Active], [Encoder], [Timestamp]) VALUES (1, N'ADRIAN ARANILLA JASPIO', 1, CAST(0x0000B14B00000000 AS DateTime), 1, 1, CAST(0x0000B14B01111058 AS DateTime))
+INSERT [dbo].[tbl_Staff] ([ID], [Name], [Position], [Instated], [Active], [Encoder], [Timestamp]) VALUES (1, 1, 1, CAST(0x0000B14500000000 AS DateTime), 1, 1, CAST(0x0000B15100869630 AS DateTime))
 GO
-INSERT [dbo].[tbl_Staff] ([ID], [Name], [Position], [Instated], [Active], [Encoder], [Timestamp]) VALUES (2, N'Margerie Sidron Jaspio', 2, CAST(0x0000B14B00000000 AS DateTime), 1, 1, CAST(0x0000B14B01550938 AS DateTime))
+INSERT [dbo].[tbl_Staff] ([ID], [Name], [Position], [Instated], [Active], [Encoder], [Timestamp]) VALUES (2, 2, 2, CAST(0x0000B14500000000 AS DateTime), 1, 1, CAST(0x0000B15100869C44 AS DateTime))
 GO
 SET IDENTITY_INSERT [dbo].[tbl_Staff] OFF
 GO
@@ -474,9 +474,9 @@ ALTER TABLE [dbo].[tbl_Person] ADD  CONSTRAINT [DF__tbl_Perso__Times__182C9B23] 
 GO
 ALTER TABLE [dbo].[tbl_ref_Position] ADD  DEFAULT (getdate()) FOR [Timestamp]
 GO
-ALTER TABLE [dbo].[tbl_Staff] ADD  DEFAULT ((1)) FOR [Active]
+ALTER TABLE [dbo].[tbl_Staff] ADD  CONSTRAINT [DF__tbl_Staff__Activ__1A14E395]  DEFAULT ((1)) FOR [Active]
 GO
-ALTER TABLE [dbo].[tbl_Staff] ADD  DEFAULT (getdate()) FOR [Timestamp]
+ALTER TABLE [dbo].[tbl_Staff] ADD  CONSTRAINT [DF__tbl_Staff__Times__1B0907CE]  DEFAULT (getdate()) FOR [Timestamp]
 GO
 ALTER TABLE [dbo].[tbl_User] ADD  DEFAULT ((2)) FOR [Role]
 GO
