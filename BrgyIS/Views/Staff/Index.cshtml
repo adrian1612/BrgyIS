@@ -25,7 +25,7 @@
             </div>
         </div>
         <div class="table-responsive">
-            <table id="data" class="table table-light table-hover table-striped table-boredered" style="font-size:0.9rem; with:100%;">
+            <table id="data" data-bind="with: Collection" class="table table-light table-hover table-striped table-bordered" style="font-size:0.9rem; with:100%;">
                 <thead>
                     <tr>
                         <th>Name</th>
@@ -35,6 +35,18 @@
                         <th></th>
                     </tr>
                 </thead>
+                <tbody data-bind="foreach: $data">
+                    <tr>
+                        <td><span data-bind="text: OfficialName"></span></td>
+                        <td><span data-bind="text: PositionName"></span></td>
+                        <td><span data-bind="text: moment(Instated).format('MM-DD-YYYY')"></span></td>
+                        <td><span data-bind="text: Active"></span></td>
+                        <td>
+                            <a href="#" data-bind="click: $root.EditData" data-bs-toggle="modal" data-bs-target="#actionModal"><i class="fa fa-edit"></i></a>
+                            <a href="#" data-bind="click: $root.removeTemp"><i class="fa fa-trash"></i></a>
+                        </td>
+                    </tr>
+                </tbody>
                 <tfoot>
                     <tr>
                         <th>Name</th>
@@ -49,6 +61,7 @@
     </div>
 </div>
 
+
 <div class="modal fade" id="actionModal" aria-labelledby="actionModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div data-bind="html: Content" class="modal-content">
@@ -60,37 +73,45 @@
 @section scripts {
     <script>
 
+       
         function officialsModel() {
             var self = this;
-            self.SelectedValue = ko.observable({});
+            self.Collection = ko.observableArray();
             self.Content = ko.observable(null);
+            self.table = null;
 
             self.NewData = () => {
                 $.get('@Url.Action("Create", "Staff", new { area = "" })', null, self.Content);
             }
 
-            self.EditData = (ID) => {
-                $.get('@Url.Action("Edit", "Staff", new { area = "" })', { ID: ID }, self.Content);
+            self.EditData = (m) => {
+                $.get('@Url.Action("Edit", "Staff", new { area = "" })', { ID: m.ID }, self.Content);
             }
 
-            self.table = $('#data').DataTable({
-                layout: {
-                    top: {
-                        buttons: [{ extend: 'print', exportOptions: { columns: ':visible' } }, { extend: 'excel', exportOptions: { columns: ':visible' } }, { extend: 'colvis', exportOptions: { columns: ':visible' } }]
-                    }
-                },
-                ajax: { url: '@Url.Action("List", "Staff", new { area = ""})' },
-                columns: [{ data: 'Name' }, { data: 'PositionName' }, { data: 'Instated', render: (data) => { return moment(data).format('MMM-DD-YYYY'); } }, { data: 'Active' },
-                {
-                    data: null,
-                    render: (data) => { return `<a href='#' data-bs-toggle="modal" data-bs-target="#actionModal" onclick="model.EditData(${data.ID})"><i class="fa fa-edit"></i></a>`; }
-                }],
-                ordering: false,
-                searching: true,
-                stateSave: true
-            });
-           
+            self.removeTemp = (d) => {
+                self.Collection.remove(d);
+            }
+
+            self.loadData = () => {
+                $.get('@Url.Action("List", "Staff", new { area = ""})', null, (d) => {
+                    self.Collection(d.data);
+                    if (self.table !== null) 
+                        self.table.destroy();
+                    self.table = $('#data').DataTable({
+                        layout: {
+                            top: {
+                                buttons: [{ extend: 'print', exportOptions: { columns: ':visible' } }, { extend: 'excel', exportOptions: { columns: ':visible' } }, { extend: 'colvis', exportOptions: { columns: ':visible' } }]
+                            }
+                        },
+                        ordering: false,
+                        searching: true,
+                        stateSave: true
+                    });
+                });
+            }
+            self.loadData();
         }
+
         var model = new officialsModel();
         ko.applyBindings(model);
     </script>

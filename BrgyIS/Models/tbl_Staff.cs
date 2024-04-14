@@ -16,9 +16,13 @@ namespace BrgyIS.Models
         public Int32 ID { get; set; }
 
         [Display(Name = "Name")]
-        public String Name { get; set; }
+        [Required]
+        public int Name { get; set; }
+
+        public string OfficialName { get; set; }
 
         [Display(Name = "Position")]
+        [Required]
         public Int32 Position { get; set; }
 
         [Display(Name = "Position")]
@@ -27,6 +31,7 @@ namespace BrgyIS.Models
         [Display(Name = "Instated")]
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy-MM-dd}")]
         [DataType(DataType.Date)]
+        [Required]
         public DateTime? Instated { get; set; }
 
         [Display(Name = "Active")]
