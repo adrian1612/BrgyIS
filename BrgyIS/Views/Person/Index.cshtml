@@ -88,14 +88,14 @@
 
 
 <div class="modal fade" id="actionModal">
-    <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-dialog modal-xl modal-dialog-centered">
         <div data-bind="html: Content" class="modal-content">
-            
+
         </div>
     </div>
 </div>
 
-<div class="modal fade" id="FormsModal">
+<div class="modal fade" id="FormsModal" data-bind="with: Selected">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             @using (Html.BeginForm("GenerateForms", "Person", new { area = "" }, FormMethod.Post, new { target = "_blank" }))
@@ -104,13 +104,25 @@
                     Generate Form
                 </div>
                 <div class="modal-body">
-                    <input type="hidden" data-bind="value: SelectedID" name="ID" />
+                    <div class="row">
+                        <label class="col-md-4 col-form-label">Fullname</label>
+                        <div class="col-md-8">
+                            <b data-bind="text: Fullname"></b>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <label class="col-md-4 col-form-label">Age</label>
+                        <div class="col-md-8">
+                            <b data-bind="text: Age + ' Years old'"></b>
+                        </div>
+                    </div>
+                    <input type="hidden" data-bind="value: ID" name="ID" />
                     <div class="row mb-3">
                         <label class="col-md-4 col-form-label">Select Form</label>
                         <div class="col-md-8">
                             <select name="Type" required class="form-select">
                                 <option value="">Select Option</option>
-                                <!--ko foreach: [{ID: 0, Description: 'Brgy. Clearance'},{ID: 1, Description: 'Cedula'},{ID: 2, Description: 'Certificate of Residency'}]-->
+                                <!--ko foreach: $root.Forms-->
                                 <option data-bind="attr: {value: ID}, text: Description"></option>
                                 <!--/ko-->
                             </select>
@@ -134,11 +146,16 @@
             var self = this;
             self.Content = ko.observable(null);
             self.Collection = ko.observableArray();
-            self.SelectedID = ko.observable();
+            self.Forms = ko.observableArray([
+                { ID: 0, Description: 'Brgy. Clearance' },
+                { ID: 1, Description: 'Cedula' },
+                { ID: 2, Description: 'Certificate of Residency' }
+            ]);
+            self.Selected = ko.observable();
             self.table = null;
 
             self.select = (d) => {
-                self.SelectedID(d.ID);
+                self.Selected(d);
                 $('#FormsModal').modal('show');
             }
 

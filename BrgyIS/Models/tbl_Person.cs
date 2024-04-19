@@ -40,6 +40,8 @@ namespace BrgyIS.Models
         [DataType(DataType.Date)]
         public DateTime? bday { get; set; }
 
+        public int Age { get; set; }
+
         [Display(Name = "Gender")]
         [Required]
         public String gender { get; set; }
