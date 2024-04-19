@@ -1,11 +1,11 @@
 ﻿USE [master]
 GO
-/****** Object:  Database [dbBrgyIS]    Script Date: 19/04/2024 4:54:10 pm ******/
+/****** Object:  Database [dbBrgyIS]    Script Date: 19/04/2024 5:08:55 pm ******/
 CREATE DATABASE [dbBrgyIS]
 GO
 USE [dbBrgyIS]
 GO
-/****** Object:  StoredProcedure [dbo].[tbl_Person_Proc]    Script Date: 19/04/2024 4:54:10 pm ******/
+/****** Object:  StoredProcedure [dbo].[tbl_Person_Proc]    Script Date: 19/04/2024 5:08:55 pm ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -89,7 +89,7 @@ END
 
 
 GO
-/****** Object:  StoredProcedure [dbo].[tbl_ref_Position_Proc]    Script Date: 19/04/2024 4:54:10 pm ******/
+/****** Object:  StoredProcedure [dbo].[tbl_ref_Position_Proc]    Script Date: 19/04/2024 5:08:55 pm ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -150,7 +150,7 @@ END
 
 
 GO
-/****** Object:  StoredProcedure [dbo].[tbl_Staff_Proc]    Script Date: 19/04/2024 4:54:10 pm ******/
+/****** Object:  StoredProcedure [dbo].[tbl_Staff_Proc]    Script Date: 19/04/2024 5:08:55 pm ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -206,7 +206,7 @@ END
 
 
 GO
-/****** Object:  StoredProcedure [dbo].[tbl_User_Proc]    Script Date: 19/04/2024 4:54:10 pm ******/
+/****** Object:  StoredProcedure [dbo].[tbl_User_Proc]    Script Date: 19/04/2024 5:08:55 pm ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -299,7 +299,7 @@ END
 
 
 GO
-/****** Object:  UserDefinedFunction [dbo].[FullnameFormat]    Script Date: 19/04/2024 4:54:10 pm ******/
+/****** Object:  UserDefinedFunction [dbo].[FullnameFormat]    Script Date: 19/04/2024 5:08:55 pm ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -313,7 +313,7 @@ BEGIN
 	RETURN @OUTPUT	
 END
 GO
-/****** Object:  Table [dbo].[tbl_FormIssuance]    Script Date: 19/04/2024 4:54:10 pm ******/
+/****** Object:  Table [dbo].[tbl_FormIssuance]    Script Date: 19/04/2024 5:08:55 pm ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -335,7 +335,7 @@ PRIMARY KEY CLUSTERED
 GO
 SET ANSI_PADDING OFF
 GO
-/****** Object:  Table [dbo].[tbl_Person]    Script Date: 19/04/2024 4:54:10 pm ******/
+/****** Object:  Table [dbo].[tbl_Person]    Script Date: 19/04/2024 5:08:55 pm ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -374,7 +374,7 @@ CREATE TABLE [dbo].[tbl_Person](
 GO
 SET ANSI_PADDING OFF
 GO
-/****** Object:  Table [dbo].[tbl_ref_Position]    Script Date: 19/04/2024 4:54:10 pm ******/
+/****** Object:  Table [dbo].[tbl_ref_Position]    Script Date: 19/04/2024 5:08:55 pm ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -395,7 +395,7 @@ PRIMARY KEY CLUSTERED
 GO
 SET ANSI_PADDING OFF
 GO
-/****** Object:  Table [dbo].[tbl_Staff]    Script Date: 19/04/2024 4:54:10 pm ******/
+/****** Object:  Table [dbo].[tbl_Staff]    Script Date: 19/04/2024 5:08:55 pm ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -415,7 +415,7 @@ CREATE TABLE [dbo].[tbl_Staff](
 ) ON [PRIMARY]
 
 GO
-/****** Object:  Table [dbo].[tbl_User]    Script Date: 19/04/2024 4:54:10 pm ******/
+/****** Object:  Table [dbo].[tbl_User]    Script Date: 19/04/2024 5:08:55 pm ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -440,7 +440,7 @@ CREATE TABLE [dbo].[tbl_User](
 GO
 SET ANSI_PADDING OFF
 GO
-/****** Object:  View [dbo].[vw_Person]    Script Date: 19/04/2024 4:54:10 pm ******/
+/****** Object:  View [dbo].[vw_Person]    Script Date: 19/04/2024 5:08:55 pm ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -494,7 +494,7 @@ SELECT p.[ID]
 
 
 GO
-/****** Object:  View [dbo].[vw_Staff]    Script Date: 19/04/2024 4:54:10 pm ******/
+/****** Object:  View [dbo].[vw_Staff]    Script Date: 19/04/2024 5:08:55 pm ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -517,7 +517,7 @@ SELECT st.[ID]
 
 
 GO
-/****** Object:  View [dbo].[vw_FormIssuance]    Script Date: 19/04/2024 4:54:10 pm ******/
+/****** Object:  View [dbo].[vw_FormIssuance]    Script Date: 19/04/2024 5:08:55 pm ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
