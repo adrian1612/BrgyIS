@@ -27,6 +27,7 @@
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
     <TypeScriptToolsVersion>3.1</TypeScriptToolsVersion>
+    <Use64BitIISExpress />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -158,6 +159,7 @@
     <Compile Include="Classes\Authorized.cs" />
     <Compile Include="Classes\dbcontrol.cs" />
     <Compile Include="Classes\MasterControl.cs" />
+    <Compile Include="Controllers\FormIssuanceController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\PersonController.cs" />
     <Compile Include="Controllers\PositionController.cs" />
@@ -173,6 +175,7 @@
     <Compile Include="init.aspx.designer.cs">
       <DependentUpon>init.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Models\tbl_FormIssuance.cs" />
     <Compile Include="Models\tbl_Person.cs" />
     <Compile Include="Models\tbl_ref_Position.cs" />
     <Compile Include="Models\tbl_Staff.cs" />
@@ -1203,6 +1206,10 @@
     <Content Include="Views\Staff\Edit.cshtml" />
     <Content Include="Views\Staff\Field.cshtml" />
     <Content Include="Views\Staff\Index.cshtml" />
+    <Content Include="Views\FormIssuance\Create.cshtml" />
+    <Content Include="Views\FormIssuance\Edit.cshtml" />
+    <Content Include="Views\FormIssuance\Field.cshtml" />
+    <Content Include="Views\FormIssuance\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

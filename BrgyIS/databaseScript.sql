@@ -1,11 +1,11 @@
 ﻿USE [master]
 GO
-/****** Object:  Database [dbBrgyIS]    Script Date: 19/04/2024 11:55:02 am ******/
+/****** Object:  Database [dbBrgyIS]    Script Date: 19/04/2024 4:54:10 pm ******/
 CREATE DATABASE [dbBrgyIS]
 GO
 USE [dbBrgyIS]
 GO
-/****** Object:  StoredProcedure [dbo].[tbl_Person_Proc]    Script Date: 19/04/2024 11:55:02 am ******/
+/****** Object:  StoredProcedure [dbo].[tbl_Person_Proc]    Script Date: 19/04/2024 4:54:10 pm ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -17,16 +17,21 @@ CREATE PROCEDURE [dbo].[tbl_Person_Proc]
 @fname varchar(max) = null,
 @mn varchar(max) = null,
 @lname varchar(max) = null,
+@Suffix varchar(50) = null,
 @FamilyHead INT = null,
 @bday datetime = null,
 @gender varchar(max) = null,
 @CivilStatus varchar(max) = null,
 @ShelterType varchar(500) = null,
 @Occupation varchar(max) = null,
+@Father INT = null,
+@Mother INT = null,
+@Guardian INT = null,
 @isPWD bit = null,
 @RelationshipToHead varchar(50) = null,
 @StNo varchar(max) = null,
 @Address varchar(max) = null,
+@HouseHoldNo varchar(50) = null,
 @Remarks varchar(max) = null,
 @Encoder int = null,
 @Timestamp datetime = null
@@ -35,9 +40,9 @@ BEGIN
 IF @Type = 'Create'
 BEGIN
 INSERT INTO [tbl_Person]
-([fname],[mn],[lname],FamilyHead,[bday],[gender],[CivilStatus],[ShelterType],[Occupation],[isPWD],[RelationshipToHead],[StNo],[Address],[Remarks],[Encoder])
+([fname],[mn],[lname],Suffix,FamilyHead,[bday],[gender],[CivilStatus],[ShelterType],[Occupation],[Father],[Mother],[Guardian],[isPWD],[RelationshipToHead],[StNo],[Address],HouseHoldNo,[Remarks],[Encoder])
 VALUES
-(@fname,@mn,@lname,@FamilyHead,@bday,@gender,@CivilStatus,@ShelterType,@Occupation,@isPWD,@RelationshipToHead,@StNo,@Address,@Remarks,@Encoder)
+(@fname,@mn,@lname,@Suffix,@FamilyHead,@bday,@gender,@CivilStatus,@ShelterType,@Occupation,@Father,@Mother,@Guardian,@isPWD,@RelationshipToHead,@StNo,@Address,@HouseHoldNo,@Remarks,@Encoder)
 
 END
 --------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -46,17 +51,22 @@ BEGIN
 UPDATE [tbl_Person] SET [fname] = @fname
 ,[mn] = @mn
 ,[lname] = @lname
+,Suffix = @Suffix
 ,FamilyHead = @FamilyHead
 ,[bday] = @bday
 ,[gender] = @gender
 ,[CivilStatus] = @CivilStatus
 ,[ShelterType] = @ShelterType
 ,[Occupation] = @Occupation
+,[Father] = @Father
+,[Mother] = @Mother
+,[Guardian] = @Guardian
 ,[isPWD] = @isPWD
 ,[RelationshipToHead] = @RelationshipToHead
 ,[StNo] = @StNo
 ,[Address] = @Address
 ,[Remarks] = @Remarks
+,HouseHoldNo = @HouseHoldNo
  WHERE [ID] = @ID
 END
 --------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -79,7 +89,7 @@ END
 
 
 GO
-/****** Object:  StoredProcedure [dbo].[tbl_ref_Position_Proc]    Script Date: 19/04/2024 11:55:02 am ******/
+/****** Object:  StoredProcedure [dbo].[tbl_ref_Position_Proc]    Script Date: 19/04/2024 4:54:10 pm ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -140,7 +150,7 @@ END
 
 
 GO
-/****** Object:  StoredProcedure [dbo].[tbl_Staff_Proc]    Script Date: 19/04/2024 11:55:02 am ******/
+/****** Object:  StoredProcedure [dbo].[tbl_Staff_Proc]    Script Date: 19/04/2024 4:54:10 pm ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -180,6 +190,11 @@ BEGIN
 SELECT * FROM [vw_Staff] 
 END
 --------------------------------------------------------------------------------------------------------------------------------------------------------------
+IF @Type = 'LatestCaptain'
+BEGIN
+SELECT TOP 1 * FROM [vw_Staff] WHERE Position = 1 ORDER BY Instated DESC
+END
+--------------------------------------------------------------------------------------------------------------------------------------------------------------
 IF @Type = 'Find'
 BEGIN
 SELECT * FROM [vw_Staff] WHERE  ID = @ID
@@ -191,7 +206,7 @@ END
 
 
 GO
-/****** Object:  StoredProcedure [dbo].[tbl_User_Proc]    Script Date: 19/04/2024 11:55:02 am ******/
+/****** Object:  StoredProcedure [dbo].[tbl_User_Proc]    Script Date: 19/04/2024 4:54:10 pm ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -284,7 +299,43 @@ END
 
 
 GO
-/****** Object:  Table [dbo].[tbl_Person]    Script Date: 19/04/2024 11:55:02 am ******/
+/****** Object:  UserDefinedFunction [dbo].[FullnameFormat]    Script Date: 19/04/2024 4:54:10 pm ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE FUNCTION [dbo].[FullnameFormat](@fname varchar(max),@mn varchar(max),@lname varchar(max),@suffix varchar(50))
+RETURNS VARCHAR(MAX)
+AS
+BEGIN
+	DECLARE @OUTPUT VARCHAR(MAX)
+	SET @OUTPUT = UPPER(CONCAT(@fname, ' ', CASE WHEN @mn IS NULL THEN '' ELSE @mn END, ' ', @lname, CASE WHEN @suffix IS NOT NULL THEN ' ' + @suffix END))
+	RETURN @OUTPUT	
+END
+GO
+/****** Object:  Table [dbo].[tbl_FormIssuance]    Script Date: 19/04/2024 4:54:10 pm ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_PADDING ON
+GO
+CREATE TABLE [dbo].[tbl_FormIssuance](
+	[ID] [int] IDENTITY(1,1) NOT NULL,
+	[Person] [int] NULL,
+	[Form] [varchar](max) NULL,
+	[Encoder] [int] NULL,
+	[Timestamp] [datetime] NULL DEFAULT (getdate()),
+PRIMARY KEY CLUSTERED 
+(
+	[ID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+
+GO
+SET ANSI_PADDING OFF
+GO
+/****** Object:  Table [dbo].[tbl_Person]    Script Date: 19/04/2024 4:54:10 pm ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -296,16 +347,21 @@ CREATE TABLE [dbo].[tbl_Person](
 	[fname] [varchar](max) NULL,
 	[mn] [varchar](max) NULL,
 	[lname] [varchar](max) NULL,
+	[Suffix] [varchar](50) NULL,
 	[FamilyHead] [int] NULL,
 	[bday] [datetime] NULL,
 	[gender] [varchar](max) NULL,
 	[CivilStatus] [varchar](max) NULL,
 	[ShelterType] [varchar](500) NULL,
 	[Occupation] [varchar](max) NULL,
+	[Father] [int] NULL,
+	[Mother] [int] NULL,
+	[Guardian] [int] NULL,
 	[isPWD] [bit] NULL,
 	[RelationshipToHead] [varchar](50) NULL,
 	[StNo] [varchar](max) NULL,
 	[Address] [varchar](max) NULL,
+	[HouseHoldNo] [varchar](50) NULL,
 	[Remarks] [varchar](max) NULL,
 	[Encoder] [int] NULL,
 	[Timestamp] [datetime] NULL CONSTRAINT [DF__tbl_Perso__Times__182C9B23]  DEFAULT (getdate()),
@@ -318,7 +374,7 @@ CREATE TABLE [dbo].[tbl_Person](
 GO
 SET ANSI_PADDING OFF
 GO
-/****** Object:  Table [dbo].[tbl_ref_Position]    Script Date: 19/04/2024 11:55:02 am ******/
+/****** Object:  Table [dbo].[tbl_ref_Position]    Script Date: 19/04/2024 4:54:10 pm ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -339,7 +395,7 @@ PRIMARY KEY CLUSTERED
 GO
 SET ANSI_PADDING OFF
 GO
-/****** Object:  Table [dbo].[tbl_Staff]    Script Date: 19/04/2024 11:55:02 am ******/
+/****** Object:  Table [dbo].[tbl_Staff]    Script Date: 19/04/2024 4:54:10 pm ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -359,7 +415,7 @@ CREATE TABLE [dbo].[tbl_Staff](
 ) ON [PRIMARY]
 
 GO
-/****** Object:  Table [dbo].[tbl_User]    Script Date: 19/04/2024 11:55:02 am ******/
+/****** Object:  Table [dbo].[tbl_User]    Script Date: 19/04/2024 4:54:10 pm ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -384,11 +440,14 @@ CREATE TABLE [dbo].[tbl_User](
 GO
 SET ANSI_PADDING OFF
 GO
-/****** Object:  View [dbo].[vw_Person]    Script Date: 19/04/2024 11:55:02 am ******/
+/****** Object:  View [dbo].[vw_Person]    Script Date: 19/04/2024 4:54:10 pm ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
+
+
+
 
 
 
@@ -399,7 +458,8 @@ SELECT p.[ID]
       ,p.[fname]
       ,p.[mn]
       ,p.[lname]
-	  ,Fullname = UPPER(CONCAT(p.fname, ' ', CASE WHEN p.mn IS NULL THEN '' ELSE p.mn END, ' ', p.lname))
+	  ,p.Suffix
+	  ,Fullname = dbo.FullnameFormat(p.fname, p.mn, p.lname, p.Suffix)
 	  ,p.FamilyHead
 	  ,FamilyHeadName = (CASE WHEN (SELECT COUNT(*) FROM tbl_Person ep WHERE p.ID = ep.FamilyHead) >= 1 THEN 'I am the head' ELSE UPPER(CONCAT(h.fname, ' ', h.mn, ' ', h.lname)) END) 
       ,p.[bday]
@@ -408,21 +468,33 @@ SELECT p.[ID]
       ,p.[CivilStatus]
       ,p.[ShelterType]
       ,p.[Occupation]
+	  ,p.Father
+	  ,FatherName = dbo.FullnameFormat(f.fname, f.mn, f.lname, f.Suffix)
+	  ,p.Mother
+	  ,MotherName = dbo.FullnameFormat(m.fname, m.mn, m.lname, m.Suffix)
+	  ,p.Guardian
+	  ,GuardianName = dbo.FullnameFormat(g.fname, g.mn, g.lname, g.Suffix)
       ,p.[isPWD]
       ,p.[RelationshipToHead]
       ,p.[StNo]
       ,p.[Address]
+	  ,p.HouseHoldNo
       ,p.[Remarks]
       ,p.[Encoder]
       ,p.[Timestamp]
   FROM [tbl_Person] p LEFT JOIN tbl_Person h ON h.ID = p.FamilyHead
+  LEFT JOIN tbl_Person f ON f.ID = p.Father
+  LEFT JOIN tbl_Person m ON m.ID = p.Mother
+  LEFT JOIN tbl_Person g ON g.ID = p.Guardian
+
+
 
 
 
 
 
 GO
-/****** Object:  View [dbo].[vw_Staff]    Script Date: 19/04/2024 11:55:02 am ******/
+/****** Object:  View [dbo].[vw_Staff]    Script Date: 19/04/2024 4:54:10 pm ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -445,12 +517,37 @@ SELECT st.[ID]
 
 
 GO
+/****** Object:  View [dbo].[vw_FormIssuance]    Script Date: 19/04/2024 4:54:10 pm ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE VIEW [dbo].[vw_FormIssuance]
+AS
+SELECT f.[ID]
+      ,f.[Person]
+	  ,Fullname = p.Fullname
+      ,f.[Form]
+      ,f.[Encoder]
+      ,f.[Timestamp]
+  FROM [tbl_FormIssuance] f
+  LEFT JOIN vw_Person p ON p.ID = f.Person
+GO
+SET IDENTITY_INSERT [dbo].[tbl_FormIssuance] ON 
+
+GO
+INSERT [dbo].[tbl_FormIssuance] ([ID], [Person], [Form], [Encoder], [Timestamp]) VALUES (1, 1, N'Brgy. Clearance', 0, CAST(N'2024-04-19 16:22:01.113' AS DateTime))
+GO
+INSERT [dbo].[tbl_FormIssuance] ([ID], [Person], [Form], [Encoder], [Timestamp]) VALUES (2, 2, N'Brgy. Clearance', 1, CAST(N'2024-04-19 16:53:31.410' AS DateTime))
+GO
+SET IDENTITY_INSERT [dbo].[tbl_FormIssuance] OFF
+GO
 SET IDENTITY_INSERT [dbo].[tbl_Person] ON 
 
 GO
-INSERT [dbo].[tbl_Person] ([ID], [fname], [mn], [lname], [FamilyHead], [bday], [gender], [CivilStatus], [ShelterType], [Occupation], [isPWD], [RelationshipToHead], [StNo], [Address], [Remarks], [Encoder], [Timestamp]) VALUES (1, N'Adrian', N'Aranilla', N'Jaspio', NULL, CAST(N'1994-07-05 00:00:00.000' AS DateTime), N'Male', N'Married', N'Rented', N'Computer Programmer', 1, N'Head of the Family', N'Kahusayan st', N'Pamana Homes sub kahusayan st, brgy bucal', NULL, NULL, NULL)
+INSERT [dbo].[tbl_Person] ([ID], [fname], [mn], [lname], [Suffix], [FamilyHead], [bday], [gender], [CivilStatus], [ShelterType], [Occupation], [Father], [Mother], [Guardian], [isPWD], [RelationshipToHead], [StNo], [Address], [HouseHoldNo], [Remarks], [Encoder], [Timestamp]) VALUES (1, N'Adrian', N'Aranilla', N'Jaspio', N'Sr', NULL, CAST(N'1994-07-05 00:00:00.000' AS DateTime), N'Male', N'Married', N'Rented', N'Computer Programmer', 1, 2, NULL, 1, N'Head of the Family', N'Kahusayan st', N'Pamana Homes sub kahusayan st, brgy bucal', NULL, NULL, NULL, NULL)
 GO
-INSERT [dbo].[tbl_Person] ([ID], [fname], [mn], [lname], [FamilyHead], [bday], [gender], [CivilStatus], [ShelterType], [Occupation], [isPWD], [RelationshipToHead], [StNo], [Address], [Remarks], [Encoder], [Timestamp]) VALUES (2, N'Margerie', N'Sidron', N'Jaspio', 1, CAST(N'1994-06-15 00:00:00.000' AS DateTime), N'Female', N'Married', N'Rented', N'Fisheries Technician', 0, N'Wife', N'Kahusayan st.', NULL, NULL, 1, CAST(N'2024-03-28 17:03:19.000' AS DateTime))
+INSERT [dbo].[tbl_Person] ([ID], [fname], [mn], [lname], [Suffix], [FamilyHead], [bday], [gender], [CivilStatus], [ShelterType], [Occupation], [Father], [Mother], [Guardian], [isPWD], [RelationshipToHead], [StNo], [Address], [HouseHoldNo], [Remarks], [Encoder], [Timestamp]) VALUES (2, N'Margerie', N'Sidron', N'Jaspio', NULL, 1, CAST(N'1994-06-15 00:00:00.000' AS DateTime), N'Female', N'Married', N'Rented', N'Fisheries Technician', NULL, NULL, NULL, 0, N'Wife', N'Kahusayan st.', NULL, NULL, NULL, 1, CAST(N'2024-03-28 17:03:19.000' AS DateTime))
 GO
 SET IDENTITY_INSERT [dbo].[tbl_Person] OFF
 GO

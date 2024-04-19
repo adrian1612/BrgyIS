@@ -61,6 +61,17 @@ namespace BrgyIS.Models
             }).ToList();
         }
 
+        public List<tbl_Staff> LatestCaptain()
+        {
+
+            return s.Query<tbl_Staff>("tbl_Staff_Proc", p => { p.Add("@Type", "LatestCaptain"); }, CommandType.StoredProcedure)
+            .Select(r =>
+            {
+
+                return r;
+            }).ToList();
+        }
+
         public tbl_Staff Find(int ID)
         {
 

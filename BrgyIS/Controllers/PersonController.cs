@@ -1,9 +1,6 @@
-using BrgyIS.Models;
 using Microsoft.Reporting.WebForms;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 
 namespace BrgyIS.Models
@@ -99,13 +96,17 @@ namespace BrgyIS.Models
         //---------------------REPORT-----------------------------------------------------------
 
         [HttpPost]
-        public ActionResult GenerateForms(int ID, FormType Type)
+        public ActionResult GenerateForms(int ID, FormType Type, string Description)
         {
+            var history = new tbl_FormIssuance();
             var ReportsAndFilename = Enum.GetName(typeof(FormType), Type);
             var Item = mod.List(ID);
+            var Officials = new tbl_Staff().LatestCaptain();
             Tool.ReportWrapper($"~/Reports/Forms/{ReportsAndFilename}.rdlc", ReportsAndFilename, ReportFormat.PDF, (d, p) =>
             {
                 d.Add(new ReportDataSource("data", Item));
+                d.Add(new ReportDataSource("officials", Officials));
+                history.Create(new tbl_FormIssuance { Person = ID, Form = Description });
             });
             return View();
         }

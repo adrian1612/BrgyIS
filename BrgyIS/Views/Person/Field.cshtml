@@ -38,6 +38,37 @@
     <div class="row">
         <div class="col-md-4">
             <div class="row">
+                @Html.LabelFor(model => model.Suffix, new { @class = "col-sm-2 col-md-3 col-lg-4 col-form-label col-form-label-sm" })
+                <div class="col-sm-10 col-md-9 col-lg-8">
+                    @Html.EditorFor(model => model.Suffix, new { htmlAttributes = new { @class = "form-control form-control-sm" } })
+                    @Html.ValidationMessageFor(model => model.Suffix, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="row">
+                @Html.LabelFor(model => model.Father, new { @class = "col-sm-2 col-md-3 col-lg-4 col-form-label col-form-label-sm" })
+                <div class="col-sm-10 col-md-9 col-lg-8">
+                    @Html.DropDownListFor(model => model.Father, new tbl_Person().ListPerson(), "Select Father", new { @class = "form-select form-select-sm searchbox" })
+                    @Html.ValidationMessageFor(model => model.Father, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="row">
+                @Html.LabelFor(model => model.Mother, new { @class = "col-sm-2 col-md-3 col-lg-4 col-form-label col-form-label-sm" })
+                <div class="col-sm-10 col-md-9 col-lg-8">
+                    @Html.DropDownListFor(model => model.Mother, new tbl_Person().ListPerson(), "Select Mother", new { @class = "form-select form-select-sm searchbox" })
+                    @Html.ValidationMessageFor(model => model.Mother, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="col-md-12">
+    <div class="row">
+        <div class="col-md-4">
+            <div class="row">
                 @Html.LabelFor(model => model.FamilyHead, new { @class = "col-sm-2 col-md-3 col-lg-4 col-form-label col-form-label-sm" })
                 <div class="col-sm-10 col-md-9 col-lg-8">
                     @Html.DropDownListFor(model => model.FamilyHead, new tbl_Person().ListPerson(Model?.ID), "Select Family Head", new { @class = "form-select form-select-sm searchbox" })
@@ -150,6 +181,28 @@
                 <div class="col-sm-10 col-md-9 col-lg-8">
                     @Html.EditorFor(model => model.Remarks, new { htmlAttributes = new { @class = "form-control form-control-sm" } })
                     @Html.ValidationMessageFor(model => model.Remarks, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="row">
+                @Html.LabelFor(model => model.Guardian, new { @class = "col-sm-2 col-md-3 col-lg-4 col-form-label col-form-label-sm" })
+                <div class="col-sm-10 col-md-9 col-lg-8">
+                    @Html.DropDownListFor(model => model.Guardian, new tbl_Person().ListPerson(), "Select Guardian", new { @class = "form-select form-select-sm searchbox" })
+                    @Html.ValidationMessageFor(model => model.Guardian, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="col-md-12">
+    <div class="row">
+        <div class="col-md-4">
+            <div class="row">
+                @Html.LabelFor(model => model.HouseHoldNo, new { @class = "col-sm-2 col-md-3 col-lg-4 col-form-label col-form-label-sm" })
+                <div class="col-sm-10 col-md-9 col-lg-8">
+                    @Html.EditorFor(model => model.HouseHoldNo, new { htmlAttributes = new { @class = "form-control form-control-sm" } })
+                    @Html.ValidationMessageFor(model => model.HouseHoldNo, "", new { @class = "text-danger" })
                 </div>
             </div>
         </div>

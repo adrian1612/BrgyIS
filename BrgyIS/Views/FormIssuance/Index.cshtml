@@ -1,0 +1,104 @@
+@using BrgyIS.Models
+@{
+    ViewBag.Title = "FormIssuance";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="pagetitle">
+    <h1>@ViewBag.Title</h1>
+    <nav>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="@Url.Action("Index", "Home")">Dashboard</a></li>
+            <li class="breadcrumb-item active">@ViewBag.Title</li>
+        </ol>
+    </nav>
+</div>
+
+<div class="card">
+    <div class="card-body">
+        <div class="card-title">@ViewBag.Title</div>
+        <div class="row row-cols-lg-auto g-1 align-items-center mt-3">
+            <div class="col" aria-action="Add">
+                <p>
+                    <a href="#" data-bs-toggle="modal" data-bs-target="#actionModal" data-bind="click:NewData"><i class="fa fa-plus-circle"></i> New record</a>
+                </p>
+            </div>
+        </div>
+        <div class="table-responsive">
+            <table id="data" data-bind="with: Collection" class="table table-light table-hover table-striped table-bordered" style="font-size:0.9rem; width:100%;">
+                <thead>
+                    <tr>
+                        <th>Person</th>
+                        <th>Form</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody data-bind="foreach: $data">
+                    <tr>
+                        <td><span data-bind='text: Person'></span></td>
+                        <td><span data-bind='text: Form'></span></td>
+                        <td>
+                            <a href="#" data-bind="click: $root.EditData" data-bs-toggle="modal" data-bs-target="#actionModal"><i class="fa fa-edit"></i></a>
+                        </td>
+                    </tr>
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <th>Person</th>
+                        <th>Form</th>
+                        <th></th>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="actionModal">
+    <div class="modal-dialog modal-dialog-centered">
+        <div data-bind="html: Content" class="modal-content">
+
+        </div>
+    </div>
+</div>
+
+@section scripts {
+    <script>
+        function FormIssuanceModel() {
+            var self = this;
+            self.Collection = ko.observableArray();
+            self.Content = ko.observable(null);
+            self.table = null;
+
+            self.NewData = () => {
+                $.get('@Url.Action("Create", "FormIssuance", new { area = "" })', null, self.Content);
+            }
+
+            self.EditData = (m) => {
+                $.get('@Url.Action("Edit", "FormIssuance", new { area = "" })', { ID: m.ID }, self.Content);
+            }
+
+            self.loadData = () => {
+                $.get('@Url.Action("List", "FormIssuance", new { area = ""})', null, (d) => {
+                    self.Collection(d.data);
+                    if (self.table !== null)
+                        self.table.destroy();
+                    self.table = $('#data').DataTable({
+                        layout: {
+                            top: {
+                                buttons: [{ extend: 'print', exportOptions: { columns: ':visible' } }, { extend: 'excel', exportOptions: { columns: ':visible' } }, { extend: 'colvis', exportOptions: { columns: ':visible' } }]
+                            }
+                        },
+                        ordering: false,
+                        searching: true,
+                        stateSave: true
+                    });
+                });
+            }
+            self.loadData();
+        }
+
+        var model = new FormIssuanceModel();
+        ko.applyBindings(model);
+    </script>
+}

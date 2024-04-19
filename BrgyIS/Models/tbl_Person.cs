@@ -26,6 +26,8 @@ namespace BrgyIS.Models
         [Required]
         public String lname { get; set; }
 
+        public string Suffix { get; set; }
+
         public string Fullname { get; set; }
 
         [Display(Name = "Family Head")]
@@ -55,6 +57,24 @@ namespace BrgyIS.Models
         [Display(Name = "Occupation")]
         public String Occupation { get; set; }
 
+        [Display(Name = "Father")]
+        public int? Father { get; set; }
+
+        [Display(Name = "Father")]
+        public string FatherName { get; set; }
+
+        [Display(Name = "Mother")]
+        public int? Mother { get; set; }
+
+        [Display(Name = "Mother")]
+        public string MotherName { get; set; }
+
+        [Display(Name = "Guardian")]
+        public int? Guardian { get; set; }
+
+        [Display(Name = "Guardian")]
+        public string GuardianName { get; set; }
+
         [Display(Name = "PWD")]
         [DataType("checkbox")]
         public Boolean isPWD { get; set; }
@@ -67,6 +87,9 @@ namespace BrgyIS.Models
 
         [Display(Name = "Address")]
         public String Address { get; set; }
+
+        [Display(Name = "House Hold#")]
+        public string HouseHoldNo { get; set; }
 
         [Display(Name = "Remarks")]
         public String Remarks { get; set; }
@@ -133,12 +156,16 @@ namespace BrgyIS.Models
                 p.Add("@fname", obj.fname);
                 p.Add("@mn", obj.mn);
                 p.Add("@lname", obj.lname);
+                p.Add("@Suffix", obj.Suffix);
                 p.Add("@FamilyHead", obj.FamilyHead);
                 p.Add("@bday", obj.bday);
                 p.Add("@gender", obj.gender);
                 p.Add("@CivilStatus", obj.CivilStatus);
                 p.Add("@ShelterType", obj.ShelterType);
                 p.Add("@Occupation", obj.Occupation);
+                p.Add("@Father", obj.Father);
+                p.Add("@Mother", obj.Mother);
+                p.Add("@Guardian", obj.Guardian);
                 p.Add("@isPWD", obj.isPWD);
                 p.Add("@RelationshipToHead", obj.RelationshipToHead);
                 p.Add("@StNo", obj.StNo);
@@ -158,12 +185,16 @@ namespace BrgyIS.Models
                 p.Add("@fname", obj.fname);
                 p.Add("@mn", obj.mn);
                 p.Add("@lname", obj.lname);
+                p.Add("@Suffix", obj.Suffix);
                 p.Add("@FamilyHead", obj.FamilyHead);
                 p.Add("@bday", obj.bday);
                 p.Add("@gender", obj.gender);
                 p.Add("@CivilStatus", obj.CivilStatus);
                 p.Add("@ShelterType", obj.ShelterType);
                 p.Add("@Occupation", obj.Occupation);
+                p.Add("@Father", obj.Father);
+                p.Add("@Mother", obj.Mother);
+                p.Add("@Guardian", obj.Guardian);
                 p.Add("@isPWD", obj.isPWD);
                 p.Add("@RelationshipToHead", obj.RelationshipToHead);
                 p.Add("@StNo", obj.StNo);
