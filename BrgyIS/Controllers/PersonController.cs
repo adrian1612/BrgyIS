@@ -99,13 +99,16 @@ namespace BrgyIS.Models
         public ActionResult GenerateForms(int ID, FormType Type, string Description)
         {
             var history = new tbl_FormIssuance();
+            var staff = new tbl_Staff();
             var ReportsAndFilename = Enum.GetName(typeof(FormType), Type);
             var Item = mod.List(ID);
-            var Officials = new tbl_Staff().LatestCaptain();
+            var Captain = staff.LatestCaptain();
+            var Officials = staff.List();
             Tool.ReportWrapper($"~/Reports/Forms/{ReportsAndFilename}.rdlc", ReportsAndFilename, ReportFormat.PDF, (d, p) =>
             {
                 d.Add(new ReportDataSource("data", Item));
                 d.Add(new ReportDataSource("officials", Officials));
+                d.Add(new ReportDataSource("Captain", Captain));
                 history.Create(new tbl_FormIssuance { Person = ID, Form = Description });
             });
             return View();

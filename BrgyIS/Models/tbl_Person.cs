@@ -75,6 +75,12 @@ namespace BrgyIS.Models
         [Display(Name = "Guardian")]
         public string GuardianName { get; set; }
 
+        [Display(Name = "Partner")]
+        public int Partner { get; set; }
+
+        [Display(Name = "Partner")]
+        public string PartnerName { get; set; }
+
         [Display(Name = "PWD")]
         [DataType("checkbox")]
         public Boolean isPWD { get; set; }
@@ -166,6 +172,7 @@ namespace BrgyIS.Models
                 p.Add("@Father", obj.Father);
                 p.Add("@Mother", obj.Mother);
                 p.Add("@Guardian", obj.Guardian);
+                p.Add("@Partner", obj.Partner);
                 p.Add("@isPWD", obj.isPWD);
                 p.Add("@RelationshipToHead", obj.RelationshipToHead);
                 p.Add("@StNo", obj.StNo);
@@ -195,6 +202,7 @@ namespace BrgyIS.Models
                 p.Add("@Father", obj.Father);
                 p.Add("@Mother", obj.Mother);
                 p.Add("@Guardian", obj.Guardian);
+                p.Add("@Partner", obj.Partner);
                 p.Add("@isPWD", obj.isPWD);
                 p.Add("@RelationshipToHead", obj.RelationshipToHead);
                 p.Add("@StNo", obj.StNo);
@@ -216,6 +224,7 @@ namespace BrgyIS.Models
     {
         BrgyClearance,
         Cedula,
-        CertificateOfResidency
+        Residency,
+        BrgyClearanceLateBirthFiling,
     }
 }
