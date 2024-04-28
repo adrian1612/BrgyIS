@@ -471,6 +471,10 @@
     <Content Include="Content\fonts\fa-solid-900.svg" />
     <Content Include="Content\fonts\fontawesome-all.min.css" />
     <Content Include="Content\fontawesome.min.css" />
+    <Content Include="Content\Img\Bagong Pilipinas.jpg" />
+    <Content Include="Content\Img\Bayan ng Pilar.png" />
+    <Content Include="Content\Img\brgy bagumbayan.jpg" />
+    <Content Include="Content\Img\pilar bataan.png" />
     <Content Include="Content\light.css" />
     <Content Include="Content\light.min.css" />
     <Content Include="Content\regular.css" />
