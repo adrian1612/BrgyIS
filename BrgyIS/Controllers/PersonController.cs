@@ -93,6 +93,11 @@ namespace BrgyIS.Models
             return RedirectToAction("Index");
         }
 
+        public ActionResult Household(int ID)
+        {
+            return new JsonNetResult { Data = mod.Household(ID) };
+        }
+
         //---------------------REPORT-----------------------------------------------------------
 
         [HttpPost]
@@ -110,6 +115,17 @@ namespace BrgyIS.Models
                 d.Add(new ReportDataSource("officials", Officials));
                 d.Add(new ReportDataSource("Captain", Captain));
                 history.Create(new tbl_FormIssuance { Person = ID, Form = Description });
+            });
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult HouseholdForms(int Head)
+        {
+            var Item = mod.Household(Head);
+            Tool.ReportWrapper($"~/Reports/Forms/Household.rdlc", "Household", ReportFormat.PDF, (d, p) =>
+            {
+                d.Add(new ReportDataSource("data", Item));
             });
             return View();
         }

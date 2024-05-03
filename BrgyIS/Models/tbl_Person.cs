@@ -44,6 +44,8 @@ namespace BrgyIS.Models
 
         public int Age { get; set; }
 
+        public bool isSenior { get; set; }
+
         [Display(Name = "Gender")]
         [Required]
         public String gender { get; set; }
@@ -122,6 +124,17 @@ namespace BrgyIS.Models
             }).ToList();
         }
 
+        public List<tbl_Person> Household(int ID)
+        {
+
+            return s.Query<tbl_Person>("tbl_Person_Proc", p => { p.Add("@Type", "Household"); p.Add("@ID", ID); }, CommandType.StoredProcedure)
+            .Select(r =>
+            {
+
+                return r;
+            }).ToList();
+        }
+
         public List<tbl_Person> List(int ID)
         {
 
@@ -177,6 +190,7 @@ namespace BrgyIS.Models
                 p.Add("@RelationshipToHead", obj.RelationshipToHead);
                 p.Add("@StNo", obj.StNo);
                 p.Add("@Address", obj.Address);
+                p.Add("@HouseHoldNo", obj.HouseHoldNo);
                 p.Add("@Remarks", obj.Remarks);
                 p.Add("@Encoder", UserSession.User.ID);
 
@@ -207,6 +221,7 @@ namespace BrgyIS.Models
                 p.Add("@RelationshipToHead", obj.RelationshipToHead);
                 p.Add("@StNo", obj.StNo);
                 p.Add("@Address", obj.Address);
+                p.Add("@HouseHoldNo", obj.HouseHoldNo);
                 p.Add("@Remarks", obj.Remarks);
 
             }, CommandType.StoredProcedure);

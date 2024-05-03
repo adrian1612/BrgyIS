@@ -60,6 +60,7 @@
                                 <li><a class="dropdown-item" href="#" data-bind="click: $root.EditData"><i class="fa fa-edit"></i> Edit</a></li>
                                 <li><a class="dropdown-item" href="#" data-bind="click: $root.select"><i class="fa fa-stamp"></i> Forms</a></li>
                                 <li><a class="dropdown-item" href="#" data-bind="click: $root.HistoryData"><i class="fa fa-history"></i> History</a></li>
+                                <li><a class="dropdown-item" href="#" data-bind="click: $root.loadHousehold"><i class="fa fa-house"></i> Household</a></li>
                             </ul>
                         </div>
                     </td>
@@ -160,6 +161,66 @@
     </div>
 </div>
 
+<div class="modal fade" id="householdModal" data-bind="with: Selected">
+    <div class="modal-dialog modal-xl modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                Household
+            </div>
+            <div class="modal-body">
+                <p>
+                    Household No# <b data-bind="text:HouseHoldNo"></b>
+                </p>
+                <div class="table-responsive">
+                    <table id="householdTable" data-bind="with: $root.Households" style="width: 100%; font-size: 0.8rem;" class="table table-sm table-light table-striped table-hover table-bordered">
+                        <thead>
+                            <tr>
+                                <th class="text-nowrap">Last name</th>
+                                <th class="text-nowrap">First name</th>
+                                <th class="text-nowrap">Middle name</th>
+                                <th class="text-nowrap">Ext.</th>
+                                <th class="text-nowrap">St No.</th>
+                                <th class="text-nowrap">Address</th>
+                                <th class="text-nowrap">Relationship To Head</th>
+                                <th class="text-nowrap">Date of Birth</th>
+                                <th class="text-nowrap">Age</th>
+                                <th class="text-nowrap">Sex</th>
+                                <th class="text-nowrap">Civil Status</th>
+                                <th class="text-nowrap">House owned/Rented</th>
+                                <th class="text-nowrap">Occupation</th>
+                                <th class="text-nowrap">PWD</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!--ko foreach: $data-->
+                            <tr>
+                                <td><span data-bind="text: lname"></span></td>
+                                <td><span data-bind="text: fname"></span></td>
+                                <td><span data-bind="text: mn"></span></td>
+                                <td><span data-bind="text: Suffix"></span></td>
+                                <td><span data-bind="text: StNo"></span></td>
+                                <td><span data-bind="text: Address"></span></td>
+                                <td><span data-bind="text: RelationshipToHead"></span></td>
+                                <td><span data-bind="text: moment(bday).format('MMMM-DD-YYYY')"></span></td>
+                                <td><span data-bind="text: Age"></span></td>
+                                <td><span data-bind="text: gender"></span></td>
+                                <td><span data-bind="text: CivilStatus"></span></td>
+                                <td><span data-bind="text: ShelterType"></span></td>
+                                <td><span data-bind="text: Occupation"></span></td>
+                                <td><span data-bind="text: isPWD == true ? 'Y' : 'N'"></span></td>
+                            </tr>
+                            <!--/ko-->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <div class="modal fade" id="FormsModal" data-bind="with: Selected">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
@@ -211,6 +272,8 @@
             var self = this;
             self.Content = ko.observable(null);
             self.Collection = ko.observableArray();
+            self.Households = ko.observableArray();
+            self.HouseholdTable = null;
             self.Forms = ko.observableArray([
                 { ID: 0, Description: 'Brgy. Clearance' },
                 { ID: 1, Description: 'Cedula' },
@@ -262,6 +325,27 @@
                 $.get('@Url.Action("Edit", "Person", new { area = "" })', { ID: m.ID }, (d) => {
                     self.Content(d);
                     $('#actionModal').modal('show');
+                });
+            }
+
+            self.loadHousehold = (m) => {
+                self.Selected(m);
+                $.get('@Url.Action("Household", "Person", new { area = "" })', ko.toJS({ ID: m.ID }), (d) => {
+                    self.Households(d);
+                    if (self.HouseholdTable !== null)
+                        self.HouseholdTable.destroy();
+                    self.HouseholdTable = $('#householdTable').DataTable({
+                        responsive: true,
+                        layout: {
+                            top: {
+                                buttons: [{ extend: 'print', exportOptions: { columns: ':visible' } }, { extend: 'excel', exportOptions: { columns: ':visible' } }, { extend: 'colvis', exportOptions: { columns: ':visible' } }]
+                            }
+                        },
+                        ordering: false,
+                        searching: true,
+                        stateSave: true
+                    });
+                    $('#householdModal').modal('show');
                 });
             }
 

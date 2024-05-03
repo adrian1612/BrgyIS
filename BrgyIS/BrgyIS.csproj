@@ -474,6 +474,7 @@
     <Content Include="Content\Img\Bagong Pilipinas.jpg" />
     <Content Include="Content\Img\Bayan ng Pilar.png" />
     <Content Include="Content\Img\brgy bagumbayan.jpg" />
+    <Content Include="Content\Img\image.jpg" />
     <Content Include="Content\Img\pilar bataan.png" />
     <Content Include="Content\light.css" />
     <Content Include="Content\light.min.css" />
@@ -1235,6 +1236,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Reports\Forms\Residency.rdlc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Reports\Forms\Household.rdlc" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
