@@ -1241,7 +1241,13 @@
     <Content Include="Reports\Forms\Household.rdlc" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Reports\Forms\Cedula.rdlc" />
+    <Content Include="Reports\Forms\SoloParents.rdlc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Reports\Forms\Indigency.rdlc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Reports\Forms\Guardianship - Copy.rdlc" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

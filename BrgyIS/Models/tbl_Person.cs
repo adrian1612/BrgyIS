@@ -238,8 +238,10 @@ namespace BrgyIS.Models
     public enum FormType
     {
         BrgyClearance,
-        Cedula,
         Residency,
         BrgyClearanceLateBirthFiling,
+        Guardianship,
+        Indigency,
+        SoloParents,
     }
 }
