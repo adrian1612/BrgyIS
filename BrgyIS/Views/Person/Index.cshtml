@@ -60,7 +60,7 @@
                                 <li><a class="dropdown-item" href="#" data-bind="click: $root.EditData"><i class="fa fa-edit"></i> Edit</a></li>
                                 <li><a class="dropdown-item" href="#" data-bind="click: $root.select"><i class="fa fa-stamp"></i> Forms</a></li>
                                 <li><a class="dropdown-item" href="#" data-bind="click: $root.HistoryData"><i class="fa fa-history"></i> History</a></li>
-                                <li><a class="dropdown-item" href="#" data-bind="click: $root.loadHousehold"><i class="fa fa-house"></i> Household</a></li>
+                                <li data-bind="visible: !FamilyHead"><a class="dropdown-item" href="#" data-bind="click: $root.loadHousehold"><i class="fa fa-house"></i> Household</a></li>
                             </ul>
                         </div>
                     </td>
@@ -140,6 +140,7 @@
                         <thead>
                             <tr>
                                 <th>Form</th>
+                                <th>Reason</th>
                                 <th>Date</th>
                             </tr>
                         </thead>
@@ -147,6 +148,7 @@
                             <!--ko foreach: $data-->
                             <tr>
                                 <td><span data-bind="text: Form"></span></td>
+                                <td><span data-bind="text: Reason ? Reason : 'N/A'"></span></td>
                                 <td><span data-bind="text: moment(Timestamp).format('MMMM-DD-YYYY hh:mm A')"></span></td>
                             </tr>
                             <!--/ko-->
@@ -252,6 +254,12 @@
                         <div class="col-md-8">
                             <select required class="form-select" data-bind="options: $root.Forms, optionsText: 'Description', optionsCaption: 'Select Form', value: $root.SelectedForm">
                             </select>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <label class="col-md-4 col-form-label">Reason</label>
+                        <div class="col-md-8">
+                            <textarea class="form-control" name="Reason" placeholder="Place reason here."></textarea>
                         </div>
                     </div>
                 </div>

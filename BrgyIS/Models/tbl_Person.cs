@@ -78,7 +78,7 @@ namespace BrgyIS.Models
         public string GuardianName { get; set; }
 
         [Display(Name = "Partner")]
-        public int Partner { get; set; }
+        public int? Partner { get; set; }
 
         [Display(Name = "Partner")]
         public string PartnerName { get; set; }
