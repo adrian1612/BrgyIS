@@ -995,7 +995,7 @@
   <Width>8.5in</Width>
   <Page>
     <PageHeader>
-      <Height>1.65625in</Height>
+      <Height>1.70584in</Height>
       <PrintOnFirstPage>true</PrintOnFirstPage>
       <PrintOnLastPage>true</PrintOnLastPage>
       <ReportItems>
@@ -1005,7 +1005,8 @@
               <Source>Embedded</Source>
               <Value>brgybagumbayan</Value>
               <Sizing>FitProportional</Sizing>
-              <Left>1.60695in</Left>
+              <Top>0.36406cm</Top>
+              <Left>0.68195in</Left>
               <Height>1.50917in</Height>
               <Width>1.44792in</Width>
               <Style>
@@ -1119,45 +1120,15 @@
                 <PaddingBottom>2pt</PaddingBottom>
               </Style>
             </Textbox>
-            <Image Name="Image1">
-              <Source>Embedded</Source>
-              <Value>BagongPilipinas</Value>
-              <Sizing>FitProportional</Sizing>
-              <Top>0.155in</Top>
-              <Left>6.31249in</Left>
-              <Height>1.10417in</Height>
-              <Width>1.10417in</Width>
-              <ZIndex>2</ZIndex>
-              <Style>
-                <Border>
-                  <Style>None</Style>
-                </Border>
-              </Style>
-            </Image>
             <Image Name="Image2">
               <Source>Embedded</Source>
               <Value>BayanngPilar</Value>
               <Sizing>FitProportional</Sizing>
-              <Top>0.14333in</Top>
-              <Left>5.18401in</Left>
+              <Top>0.29611in</Top>
+              <Left>6.45833in</Left>
               <Height>1.10417in</Height>
               <Width>1.10417in</Width>
-              <ZIndex>3</ZIndex>
-              <Style>
-                <Border>
-                  <Style>None</Style>
-                </Border>
-              </Style>
-            </Image>
-            <Image Name="Image4">
-              <Source>Embedded</Source>
-              <Value>pilarbataan</Value>
-              <Sizing>FitProportional</Sizing>
-              <Top>0.36406cm</Top>
-              <Left>0.55in</Left>
-              <Height>1.10417in</Height>
-              <Width>1.10417in</Width>
-              <ZIndex>4</ZIndex>
+              <ZIndex>2</ZIndex>
               <Style>
                 <Border>
                   <Style>None</Style>
@@ -1168,7 +1139,7 @@
           <KeepTogether>true</KeepTogether>
           <Top>0.05334in</Top>
           <Left>0.29167in</Left>
-          <Height>1.56472in</Height>
+          <Height>1.6525in</Height>
           <Width>7.91667in</Width>
           <Style>
             <Border>

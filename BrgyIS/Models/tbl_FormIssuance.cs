@@ -25,6 +25,9 @@ namespace BrgyIS.Models
         [Display(Name = "Form")]
         public String Form { get; set; }
 
+        [Display(Name = "Reason")]
+        public String Reason { get; set; }
+
         [Display(Name = "Encoder")]
         [ScaffoldColumn(false)]
         public Int32 Encoder { get; set; }
@@ -77,6 +80,7 @@ namespace BrgyIS.Models
             {
                 p.Add("Person", obj.Person);
                 p.Add("Form", obj.Form);
+                p.Add("Reason", obj.Reason);
                 p.Add("Encoder", UserSession.User.ID);
             });
             return ID;

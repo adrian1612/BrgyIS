@@ -922,6 +922,7 @@
     <Content Include="Scripts\fontawesome\thin.min.js" />
     <Content Include="Scripts\fontawesome\v4-shims.js" />
     <Content Include="Scripts\fontawesome\v4-shims.min.js" />
+    <Content Include="Scripts\googlemap.js" />
     <Content Include="Scripts\i18n\af.js" />
     <Content Include="Scripts\i18n\ar.js" />
     <Content Include="Scripts\i18n\az.js" />
@@ -1241,7 +1242,13 @@
     <Content Include="Reports\Forms\Household.rdlc" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Reports\Forms\Cedula.rdlc" />
+    <Content Include="Reports\Forms\SoloParents.rdlc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Reports\Forms\Indigency.rdlc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Reports\Forms\Guardianship - Copy.rdlc" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

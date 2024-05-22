@@ -101,7 +101,7 @@ namespace BrgyIS.Models
         //---------------------REPORT-----------------------------------------------------------
 
         [HttpPost]
-        public ActionResult GenerateForms(int ID, FormType Type, string Description)
+        public ActionResult GenerateForms(int ID, FormType Type, string Description, string Reason = null)
         {
             var history = new tbl_FormIssuance();
             var staff = new tbl_Staff();
@@ -114,7 +114,11 @@ namespace BrgyIS.Models
                 d.Add(new ReportDataSource("data", Item));
                 d.Add(new ReportDataSource("officials", Officials));
                 d.Add(new ReportDataSource("Captain", Captain));
-                history.Create(new tbl_FormIssuance { Person = ID, Form = Description });
+                if (!string.IsNullOrEmpty(Reason))
+                {
+                    p.Add(new ReportParameter("Reason", Reason));
+                }
+                history.Create(new tbl_FormIssuance { Person = ID, Form = Description, Reason = Reason });
             });
             return View();
         }
