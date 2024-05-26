@@ -17,6 +17,65 @@ namespace BrgyIS.Controllers
             return View();
         }
 
+        public JsonResult Statistic()
+        {
+            var list = person.List();
+            var output = new
+            {
+                Gender = _Stat_Gender(list),
+                SrPwd = _Stat_SrPwd(list),
+                Civil = _Stat_Civil(list),
+                Prop = _Stat_Profession(list)
+            };
+            return new JsonNetResult { Data = output };
+        }
+
+        public object _Stat_Civil(List<tbl_Person> collection)
+        {
+            var list = collection;
+            var output = list.GroupBy(f => f.CivilStatus)
+                .Select(f => new
+                {
+                    Status = f.Key,
+                    Count = f.Count()
+                });
+            return output;
+        }
+
+        public object _Stat_Profession(List<tbl_Person> collection)
+        {
+            var list = collection;
+            var output = list.GroupBy(f => f.Occupation)
+                .Select(f => new
+                {
+                    Profession = f.Key,
+                    Count = f.Count()
+                });
+            return output;
+        }
+
+        public object _Stat_Gender(List<tbl_Person> collection)
+        {
+            var list = collection;
+            var output = list.GroupBy(f => f.gender)
+                .Select(f => new
+                {
+                    Gender = f.Key,
+                    Count = f.Count()
+                });
+            return output;
+        }
+
+        public object _Stat_SrPwd(List<tbl_Person> collection)
+        {
+            var list = collection;
+            var output = new
+            {
+                Senior = list.Count(f => f.isSenior),
+                PWD = list.Count(f => f.isPWD)
+            };
+            return output;
+        }
 
         public JsonResult GenderStatistic()
         {
