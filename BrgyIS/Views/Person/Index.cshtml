@@ -45,6 +45,8 @@
                     <th class="text-nowrap">Address</th>
                     <th class="text-nowrap">Guardian</th>
                     <th class="text-nowrap">Remarks</th>
+                    <th class="text-nowrap">Contact No</th>
+                    <th class="text-nowrap">Email Address</th>
                 </tr>
             </thead>
             <tbody data-bind="foreach: $data">
@@ -79,6 +81,8 @@
                     <td class="text-nowrap"><span data-bind="text: Address"></span></td>
                     <td class="text-nowrap"><span data-bind="text: GuardianName"></span><span data-bind="visible: GuardianName">N/A</span></td>
                     <td class="text-nowrap"><span data-bind="text: Remarks"></span></td>
+                    <td class="text-nowrap"><span data-bind="text: ContactNo"></span></td>
+                    <td class="text-nowrap"><span data-bind="text: Email"></span></td>
                 </tr>
             </tbody>
             <tfoot>
@@ -101,6 +105,8 @@
                     <th class="text-nowrap">Address</th>
                     <th class="text-nowrap">Guardian</th>
                     <th class="text-nowrap">Remarks</th>
+                    <th class="text-nowrap">Contact No</th>
+                    <th class="text-nowrap">Email Address</th>
                 </tr>
             </tfoot>
         </table>
@@ -191,6 +197,7 @@
                                 <th class="text-nowrap">House owned/Rented</th>
                                 <th class="text-nowrap">Occupation</th>
                                 <th class="text-nowrap">PWD</th>
+                                <th class="text-nowrap">Contact No.</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -210,6 +217,7 @@
                                 <td><span data-bind="text: ShelterType"></span></td>
                                 <td><span data-bind="text: Occupation"></span></td>
                                 <td><span data-bind="text: isPWD == true ? 'Y' : 'N'"></span></td>
+                                <td><span data-bind="text: ContactNo"></span></td>
                             </tr>
                             <!--/ko-->
                         </tbody>

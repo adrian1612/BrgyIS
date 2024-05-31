@@ -161,6 +161,7 @@
     <Compile Include="Classes\MasterControl.cs" />
     <Compile Include="Controllers\FormIssuanceController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\MapSettingController.cs" />
     <Compile Include="Controllers\PersonController.cs" />
     <Compile Include="Controllers\PositionController.cs" />
     <Compile Include="Controllers\StaffController.cs" />
@@ -176,6 +177,7 @@
       <DependentUpon>init.aspx</DependentUpon>
     </Compile>
     <Compile Include="Models\tbl_FormIssuance.cs" />
+    <Compile Include="Models\tbl_MapSetting.cs" />
     <Compile Include="Models\tbl_Person.cs" />
     <Compile Include="Models\tbl_ref_Position.cs" />
     <Compile Include="Models\tbl_Staff.cs" />
@@ -1218,6 +1220,7 @@
     <Content Include="Views\FormIssuance\Edit.cshtml" />
     <Content Include="Views\FormIssuance\Field.cshtml" />
     <Content Include="Views\FormIssuance\Index.cshtml" />
+    <Content Include="Views\MapSetting\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

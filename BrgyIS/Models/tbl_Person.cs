@@ -99,6 +99,13 @@ namespace BrgyIS.Models
         [Display(Name = "House Hold#")]
         public string HouseHoldNo { get; set; }
 
+        [Display(Name = "Contact No.")]
+        public String ContactNo { get; set; }
+
+        [Display(Name = "Email Address")]
+        [DataType(DataType.EmailAddress)]
+        public string Email { get; set; }
+
         [Display(Name = "Remarks")]
         public String Remarks { get; set; }
 
@@ -191,6 +198,8 @@ namespace BrgyIS.Models
                 p.Add("@StNo", obj.StNo);
                 p.Add("@Address", obj.Address);
                 p.Add("@HouseHoldNo", obj.HouseHoldNo);
+                p.Add("@ContactNo", obj.ContactNo);
+                p.Add("@Email", obj.Email);
                 p.Add("@Remarks", obj.Remarks);
                 p.Add("@Encoder", UserSession.User.ID);
 
@@ -222,6 +231,8 @@ namespace BrgyIS.Models
                 p.Add("@StNo", obj.StNo);
                 p.Add("@Address", obj.Address);
                 p.Add("@HouseHoldNo", obj.HouseHoldNo);
+                p.Add("@ContactNo", obj.ContactNo);
+                p.Add("@Email", obj.Email);
                 p.Add("@Remarks", obj.Remarks);
 
             }, CommandType.StoredProcedure);

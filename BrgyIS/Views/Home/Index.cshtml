@@ -92,6 +92,13 @@
         function chartModel() {
             var self = this;
 
+            self.Get = () => {
+                $.get('@Url.Action("Get", "MapSetting", new { area = "" })', null, (d) => {
+                    initMap(d);
+                });
+            }
+
+            self.Get();
             self.setGender = (d) => {
                 var colors = ['cyan', 'pink'];
                 gender.setOption({
@@ -235,6 +242,7 @@
 
         var model = new chartModel();
         ko.applyBindings(model);
+
     </script>
     
 }

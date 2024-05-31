@@ -1,0 +1,77 @@
+@using BrgyIS.Models
+@{
+    ViewBag.Title = "Map Setting";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="pagetitle">
+    <h1>@ViewBag.Title</h1>
+    <nav>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="@Url.Action("Index", "Home")">Dashboard</a></li>
+            <li class="breadcrumb-item active">@ViewBag.Title</li>
+        </ol>
+    </nav>
+</div>
+
+<div class="row">
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-body">
+                <div class="card-title">@ViewBag.Title</div>
+                <div data-bind="with: Setting">
+                    <div class="row mb-3">
+                        <label class="form-label col-md-4">Latitude</label>
+                        <div class="col-md-8">
+                            <input type="number" data-bind="value: Latitude" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <label class="form-label col-md-4">Longitude</label>
+                        <div class="col-md-8">
+                            <input type="number" data-bind="value: Longitude" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-8 offset-md-4">
+                             <button data-bind="click: $root.Update" class="btn btn-success"><i class="fa fa-save"></i>&nbsp;Save</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section scripts {
+    <script>
+
+        function MapSettingModel(d) {
+            var self = this;
+            self.Latitude = d.Latitude;
+            self.Longitude = d.Longitude;
+        }
+
+        function MapScheme() {
+            var self = this;
+            self.Setting = ko.observable(new MapSettingModel({}));
+
+            self.Get = () => {
+                $.get('@Url.Action("Get", "MapSetting", new { area = "" })', null, self.Setting);
+            }
+
+            self.Update = (data) => {
+                $.post('@Url.Action("Update", "MapSetting", new { area = "" })', ko.toJS({ m: data }), (d) => {
+                    toastr.success('Settings successfully saved', 'Information');
+                });
+            }
+
+            self.Get();
+        }
+
+        var model = new MapScheme();
+        ko.applyBindings(model);
+
+    </script>
+}
