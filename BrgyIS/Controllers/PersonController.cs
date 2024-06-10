@@ -133,5 +133,13 @@ namespace BrgyIS.Models
             });
             return View();
         }
+
+        public ActionResult Statistic() {
+            var Item = mod.List();
+            Tool.ReportWrapper($"~/Reports/Forms/Statistic.rdlc", "Statistic", ReportFormat.PDF, (d, p) => {
+                d.Add(new ReportDataSource("data", Item));
+            });
+            return View();
+        }
     }
 }
