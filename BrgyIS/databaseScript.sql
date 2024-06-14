@@ -1,11 +1,11 @@
 ﻿USE [master]
 GO
-/****** Object:  Database [dbBrgyIS]    Script Date: 31/05/2024 11:50:36 am ******/
+/****** Object:  Database [dbBrgyIS]    Script Date: 14/06/2024 3:43:35 pm ******/
 CREATE DATABASE [dbBrgyIS]
 GO
 USE [dbBrgyIS]
 GO
-/****** Object:  StoredProcedure [dbo].[tbl_MapSetting_Proc]    Script Date: 31/05/2024 11:50:36 am ******/
+/****** Object:  StoredProcedure [dbo].[tbl_MapSetting_Proc]    Script Date: 14/06/2024 3:43:35 pm ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -35,7 +35,7 @@ END
 END
 
 GO
-/****** Object:  StoredProcedure [dbo].[tbl_Person_Proc]    Script Date: 31/05/2024 11:50:36 am ******/
+/****** Object:  StoredProcedure [dbo].[tbl_Person_Proc]    Script Date: 14/06/2024 3:43:35 pm ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -134,7 +134,7 @@ END
 
 
 GO
-/****** Object:  StoredProcedure [dbo].[tbl_ref_Position_Proc]    Script Date: 31/05/2024 11:50:36 am ******/
+/****** Object:  StoredProcedure [dbo].[tbl_ref_Position_Proc]    Script Date: 14/06/2024 3:43:35 pm ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -199,7 +199,7 @@ END
 
 
 GO
-/****** Object:  StoredProcedure [dbo].[tbl_Staff_Proc]    Script Date: 31/05/2024 11:50:36 am ******/
+/****** Object:  StoredProcedure [dbo].[tbl_Staff_Proc]    Script Date: 14/06/2024 3:43:35 pm ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -259,7 +259,7 @@ END
 
 
 GO
-/****** Object:  StoredProcedure [dbo].[tbl_User_Proc]    Script Date: 31/05/2024 11:50:36 am ******/
+/****** Object:  StoredProcedure [dbo].[tbl_User_Proc]    Script Date: 14/06/2024 3:43:35 pm ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -356,7 +356,7 @@ END
 
 
 GO
-/****** Object:  UserDefinedFunction [dbo].[FullnameFormat]    Script Date: 31/05/2024 11:50:36 am ******/
+/****** Object:  UserDefinedFunction [dbo].[FullnameFormat]    Script Date: 14/06/2024 3:43:35 pm ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -374,7 +374,7 @@ END
 
 
 GO
-/****** Object:  Table [dbo].[tbl_FormIssuance]    Script Date: 31/05/2024 11:50:36 am ******/
+/****** Object:  Table [dbo].[tbl_FormIssuance]    Script Date: 14/06/2024 3:43:35 pm ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -397,7 +397,7 @@ CREATE TABLE [dbo].[tbl_FormIssuance](
 GO
 SET ANSI_PADDING OFF
 GO
-/****** Object:  Table [dbo].[tbl_MapSetting]    Script Date: 31/05/2024 11:50:36 am ******/
+/****** Object:  Table [dbo].[tbl_MapSetting]    Script Date: 14/06/2024 3:43:35 pm ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -408,7 +408,7 @@ CREATE TABLE [dbo].[tbl_MapSetting](
 ) ON [PRIMARY]
 
 GO
-/****** Object:  Table [dbo].[tbl_Person]    Script Date: 31/05/2024 11:50:36 am ******/
+/****** Object:  Table [dbo].[tbl_Person]    Script Date: 14/06/2024 3:43:35 pm ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -450,7 +450,7 @@ CREATE TABLE [dbo].[tbl_Person](
 GO
 SET ANSI_PADDING OFF
 GO
-/****** Object:  Table [dbo].[tbl_ref_Position]    Script Date: 31/05/2024 11:50:36 am ******/
+/****** Object:  Table [dbo].[tbl_ref_Position]    Script Date: 14/06/2024 3:43:35 pm ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -471,7 +471,7 @@ PRIMARY KEY CLUSTERED
 GO
 SET ANSI_PADDING OFF
 GO
-/****** Object:  Table [dbo].[tbl_Staff]    Script Date: 31/05/2024 11:50:36 am ******/
+/****** Object:  Table [dbo].[tbl_Staff]    Script Date: 14/06/2024 3:43:35 pm ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -491,7 +491,7 @@ CREATE TABLE [dbo].[tbl_Staff](
 ) ON [PRIMARY]
 
 GO
-/****** Object:  Table [dbo].[tbl_User]    Script Date: 31/05/2024 11:50:36 am ******/
+/****** Object:  Table [dbo].[tbl_User]    Script Date: 14/06/2024 3:43:35 pm ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -516,7 +516,7 @@ CREATE TABLE [dbo].[tbl_User](
 GO
 SET ANSI_PADDING OFF
 GO
-/****** Object:  View [dbo].[vw_Person]    Script Date: 31/05/2024 11:50:36 am ******/
+/****** Object:  View [dbo].[vw_Person]    Script Date: 14/06/2024 3:43:35 pm ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -571,7 +571,7 @@ SELECT p.[ID]
 
 
 GO
-/****** Object:  View [dbo].[vw_Staff]    Script Date: 31/05/2024 11:50:36 am ******/
+/****** Object:  View [dbo].[vw_Staff]    Script Date: 14/06/2024 3:43:35 pm ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -598,7 +598,7 @@ SELECT st.[ID]
 
 
 GO
-/****** Object:  View [dbo].[vw_FormIssuance]    Script Date: 31/05/2024 11:50:36 am ******/
+/****** Object:  View [dbo].[vw_FormIssuance]    Script Date: 14/06/2024 3:43:35 pm ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -620,91 +620,6 @@ SELECT f.[ID]
 
 
 
-GO
-SET IDENTITY_INSERT [dbo].[tbl_FormIssuance] ON 
-
-GO
-INSERT [dbo].[tbl_FormIssuance] ([ID], [Person], [Form], [Reason], [Encoder], [Timestamp]) VALUES (1, 1, N'Brgy. Clearance', NULL, 0, CAST(N'2024-04-19 16:22:01.113' AS DateTime))
-GO
-INSERT [dbo].[tbl_FormIssuance] ([ID], [Person], [Form], [Reason], [Encoder], [Timestamp]) VALUES (2, 2, N'Brgy. Clearance', NULL, 1, CAST(N'2024-04-19 16:53:31.410' AS DateTime))
-GO
-INSERT [dbo].[tbl_FormIssuance] ([ID], [Person], [Form], [Reason], [Encoder], [Timestamp]) VALUES (3, 1, N'Brgy. Clearance', NULL, 1, CAST(N'2024-04-28 12:02:57.243' AS DateTime))
-GO
-INSERT [dbo].[tbl_FormIssuance] ([ID], [Person], [Form], [Reason], [Encoder], [Timestamp]) VALUES (4, 1, N'Brgy. Clearance', NULL, 1, CAST(N'2024-04-28 12:04:04.360' AS DateTime))
-GO
-INSERT [dbo].[tbl_FormIssuance] ([ID], [Person], [Form], [Reason], [Encoder], [Timestamp]) VALUES (5, 1, N'Brgy. Clearance', NULL, 1, CAST(N'2024-04-28 12:06:09.323' AS DateTime))
-GO
-INSERT [dbo].[tbl_FormIssuance] ([ID], [Person], [Form], [Reason], [Encoder], [Timestamp]) VALUES (6, 1, N'Brgy. Clearance', NULL, 1, CAST(N'2024-04-28 12:06:34.447' AS DateTime))
-GO
-INSERT [dbo].[tbl_FormIssuance] ([ID], [Person], [Form], [Reason], [Encoder], [Timestamp]) VALUES (7, 1, N'Brgy. Clearance', NULL, 1, CAST(N'2024-04-28 21:57:22.550' AS DateTime))
-GO
-INSERT [dbo].[tbl_FormIssuance] ([ID], [Person], [Form], [Reason], [Encoder], [Timestamp]) VALUES (8, 1, N'Brgy. Clearance', NULL, 1, CAST(N'2024-04-28 21:58:53.237' AS DateTime))
-GO
-INSERT [dbo].[tbl_FormIssuance] ([ID], [Person], [Form], [Reason], [Encoder], [Timestamp]) VALUES (9, 1, N'Brgy. Clearance', NULL, 1, CAST(N'2024-04-28 21:59:51.140' AS DateTime))
-GO
-INSERT [dbo].[tbl_FormIssuance] ([ID], [Person], [Form], [Reason], [Encoder], [Timestamp]) VALUES (10, 1, N'Brgy. Clearance', NULL, 1, CAST(N'2024-04-28 22:00:14.433' AS DateTime))
-GO
-INSERT [dbo].[tbl_FormIssuance] ([ID], [Person], [Form], [Reason], [Encoder], [Timestamp]) VALUES (11, 1, N'Brgy. Clearance', NULL, 1, CAST(N'2024-04-28 22:00:25.477' AS DateTime))
-GO
-INSERT [dbo].[tbl_FormIssuance] ([ID], [Person], [Form], [Reason], [Encoder], [Timestamp]) VALUES (12, 1, N'Brgy. Clearance', NULL, 1, CAST(N'2024-04-28 22:00:35.770' AS DateTime))
-GO
-INSERT [dbo].[tbl_FormIssuance] ([ID], [Person], [Form], [Reason], [Encoder], [Timestamp]) VALUES (13, 1, N'Brgy. Clearance', NULL, 1, CAST(N'2024-04-28 22:01:05.157' AS DateTime))
-GO
-INSERT [dbo].[tbl_FormIssuance] ([ID], [Person], [Form], [Reason], [Encoder], [Timestamp]) VALUES (14, 1, N'Late Filing of Birth', NULL, 1, CAST(N'2024-04-28 22:01:59.013' AS DateTime))
-GO
-INSERT [dbo].[tbl_FormIssuance] ([ID], [Person], [Form], [Reason], [Encoder], [Timestamp]) VALUES (15, 1, N'Late Filing of Birth', NULL, 1, CAST(N'2024-04-28 22:03:23.307' AS DateTime))
-GO
-INSERT [dbo].[tbl_FormIssuance] ([ID], [Person], [Form], [Reason], [Encoder], [Timestamp]) VALUES (16, 1, N'Late Filing of Birth', NULL, 1, CAST(N'2024-04-28 22:04:22.920' AS DateTime))
-GO
-INSERT [dbo].[tbl_FormIssuance] ([ID], [Person], [Form], [Reason], [Encoder], [Timestamp]) VALUES (17, 1, N'Brgy. Clearance', NULL, 1, CAST(N'2024-04-28 22:04:30.717' AS DateTime))
-GO
-INSERT [dbo].[tbl_FormIssuance] ([ID], [Person], [Form], [Reason], [Encoder], [Timestamp]) VALUES (18, 1, N'Brgy. Clearance', NULL, 1, CAST(N'2024-04-28 22:05:07.613' AS DateTime))
-GO
-INSERT [dbo].[tbl_FormIssuance] ([ID], [Person], [Form], [Reason], [Encoder], [Timestamp]) VALUES (19, 1, N'Brgy. Clearance', NULL, 1, CAST(N'2024-04-28 22:06:48.910' AS DateTime))
-GO
-INSERT [dbo].[tbl_FormIssuance] ([ID], [Person], [Form], [Reason], [Encoder], [Timestamp]) VALUES (20, 1, N'Certificate of Residency', NULL, 1, CAST(N'2024-04-28 22:12:03.270' AS DateTime))
-GO
-INSERT [dbo].[tbl_FormIssuance] ([ID], [Person], [Form], [Reason], [Encoder], [Timestamp]) VALUES (21, 1, N'Certificate of Residency', NULL, 1, CAST(N'2024-04-28 22:13:00.200' AS DateTime))
-GO
-INSERT [dbo].[tbl_FormIssuance] ([ID], [Person], [Form], [Reason], [Encoder], [Timestamp]) VALUES (22, 1, N'Certificate of Indigency', N'Mag aabroad po', 1, CAST(N'2024-05-11 10:15:39.200' AS DateTime))
-GO
-SET IDENTITY_INSERT [dbo].[tbl_FormIssuance] OFF
-GO
-INSERT [dbo].[tbl_MapSetting] ([Latitude], [Longitude]) VALUES (CAST(14.680900392135900 AS Decimal(23, 15)), CAST(120.551992653344470 AS Decimal(23, 15)))
-GO
-SET IDENTITY_INSERT [dbo].[tbl_Person] ON 
-
-GO
-INSERT [dbo].[tbl_Person] ([ID], [fname], [mn], [lname], [Suffix], [FamilyHead], [bday], [gender], [CivilStatus], [ShelterType], [Occupation], [Father], [Mother], [Guardian], [Partner], [isPWD], [RelationshipToHead], [StNo], [Address], [HouseHoldNo], [ContactNo], [Email], [Remarks], [Encoder], [Timestamp]) VALUES (1, N'Adrian', N'Aranilla', N'Jaspio', N'Sr', NULL, CAST(N'1950-07-05 00:00:00.000' AS DateTime), N'Male', N'Married', N'Rented', N'Computer Programmer', 1, 2, NULL, 2, 1, N'Head of the Family', N'Kahusayan st', N'Pamana Homes sub kahusayan st, brgy bucal', N'34', N'09776973009', NULL, NULL, NULL, NULL)
-GO
-INSERT [dbo].[tbl_Person] ([ID], [fname], [mn], [lname], [Suffix], [FamilyHead], [bday], [gender], [CivilStatus], [ShelterType], [Occupation], [Father], [Mother], [Guardian], [Partner], [isPWD], [RelationshipToHead], [StNo], [Address], [HouseHoldNo], [ContactNo], [Email], [Remarks], [Encoder], [Timestamp]) VALUES (2, N'Margerie', N'Sidron', N'Jaspio', NULL, 1, CAST(N'1994-06-15 00:00:00.000' AS DateTime), N'Female', N'Married', N'Rented', N'Fisheries Technician', NULL, NULL, NULL, 1, 0, N'Wife', N'Kahusayan st.', NULL, N'34', NULL, NULL, NULL, 1, CAST(N'2024-03-28 17:03:19.000' AS DateTime))
-GO
-SET IDENTITY_INSERT [dbo].[tbl_Person] OFF
-GO
-SET IDENTITY_INSERT [dbo].[tbl_ref_Position] ON 
-
-GO
-INSERT [dbo].[tbl_ref_Position] ([ID], [Position], [Encoder], [Timestamp]) VALUES (1, N'Punong Barangay', NULL, CAST(N'2024-04-02 19:35:16.207' AS DateTime))
-GO
-INSERT [dbo].[tbl_ref_Position] ([ID], [Position], [Encoder], [Timestamp]) VALUES (2, N'Secretary', 1, CAST(N'2024-04-12 21:32:58.163' AS DateTime))
-GO
-SET IDENTITY_INSERT [dbo].[tbl_ref_Position] OFF
-GO
-SET IDENTITY_INSERT [dbo].[tbl_Staff] ON 
-
-GO
-INSERT [dbo].[tbl_Staff] ([ID], [Name], [Position], [Instated], [Active], [Encoder], [Timestamp]) VALUES (1, 1, 1, CAST(N'2024-04-01 00:00:00.000' AS DateTime), 1, 1, CAST(N'2024-04-13 08:10:00.907' AS DateTime))
-GO
-INSERT [dbo].[tbl_Staff] ([ID], [Name], [Position], [Instated], [Active], [Encoder], [Timestamp]) VALUES (2, 2, 2, CAST(N'2024-04-01 00:00:00.000' AS DateTime), 1, 1, CAST(N'2024-04-13 08:10:06.093' AS DateTime))
-GO
-SET IDENTITY_INSERT [dbo].[tbl_Staff] OFF
-GO
-SET IDENTITY_INSERT [dbo].[tbl_User] ON 
-
-GO
-INSERT [dbo].[tbl_User] ([ID], [Username], [Password], [Role], [Active], [fname], [mn], [lname], [gender], [email], [address], [Timestamp]) VALUES (1, N'admin', N'admin!!@@', 2, 1, N'adrian', N'aranilla', N'jaspio', N'Male', N'adrianjaspio@gmail.com', N'purok santol 1 mayao crossing lucena city', CAST(N'2024-03-24 13:15:20.450' AS DateTime))
-GO
-SET IDENTITY_INSERT [dbo].[tbl_User] OFF
 GO
 USE [master]
 GO
