@@ -1251,7 +1251,7 @@
     <Content Include="Reports\Forms\Indigency.rdlc" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Reports\Forms\Guardianship - Copy.rdlc" />
+    <Content Include="Reports\Forms\Guardianship.rdlc" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Reports\Forms\Statistic.rdlc" />
