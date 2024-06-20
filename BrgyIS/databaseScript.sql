@@ -1,11 +1,11 @@
 ﻿USE [master]
 GO
-/****** Object:  Database [dbBrgyIS]    Script Date: 14/06/2024 3:43:35 pm ******/
+/****** Object:  Database [dbBrgyIS]    Script Date: 20/06/2024 11:17:24 am ******/
 CREATE DATABASE [dbBrgyIS]
 GO
 USE [dbBrgyIS]
 GO
-/****** Object:  StoredProcedure [dbo].[tbl_MapSetting_Proc]    Script Date: 14/06/2024 3:43:35 pm ******/
+/****** Object:  StoredProcedure [dbo].[tbl_MapSetting_Proc]    Script Date: 20/06/2024 11:17:24 am ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -35,7 +35,7 @@ END
 END
 
 GO
-/****** Object:  StoredProcedure [dbo].[tbl_Person_Proc]    Script Date: 14/06/2024 3:43:35 pm ******/
+/****** Object:  StoredProcedure [dbo].[tbl_Person_Proc]    Script Date: 20/06/2024 11:17:24 am ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -134,7 +134,7 @@ END
 
 
 GO
-/****** Object:  StoredProcedure [dbo].[tbl_ref_Position_Proc]    Script Date: 14/06/2024 3:43:35 pm ******/
+/****** Object:  StoredProcedure [dbo].[tbl_ref_Position_Proc]    Script Date: 20/06/2024 11:17:24 am ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -199,7 +199,7 @@ END
 
 
 GO
-/****** Object:  StoredProcedure [dbo].[tbl_Staff_Proc]    Script Date: 14/06/2024 3:43:35 pm ******/
+/****** Object:  StoredProcedure [dbo].[tbl_Staff_Proc]    Script Date: 20/06/2024 11:17:24 am ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -259,7 +259,7 @@ END
 
 
 GO
-/****** Object:  StoredProcedure [dbo].[tbl_User_Proc]    Script Date: 14/06/2024 3:43:35 pm ******/
+/****** Object:  StoredProcedure [dbo].[tbl_User_Proc]    Script Date: 20/06/2024 11:17:24 am ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -344,19 +344,17 @@ END
 --------------------------------------------------------------------------------------------------------------------------------------------------------------
 IF @Type = 'Login'
 BEGIN
-	SELECT * FROM [tbl_User] WHERE HASHBYTES('MD5', Username) = HASHBYTES('MD5', @Username) AND HASHBYTES('MD5', [Password]) = HASHBYTES('MD5', @Password) 
+	IF EXISTS (SELECT * FROM [tbl_User] WHERE HASHBYTES('MD5', Username) = HASHBYTES('MD5', @Username) AND HASHBYTES('MD5', [Password]) = HASHBYTES('MD5', @Password))
+	BEGIN
+		SELECT @ID = ID FROM [tbl_User] WHERE HASHBYTES('MD5', Username) = HASHBYTES('MD5', @Username) AND HASHBYTES('MD5', [Password]) = HASHBYTES('MD5', @Password) 
+		INSERT INTO tbl_User_Log ([User]) VALUES (@ID)
+		SELECT * FROM [tbl_User] WHERE HASHBYTES('MD5', Username) = HASHBYTES('MD5', @Username) AND HASHBYTES('MD5', [Password]) = HASHBYTES('MD5', @Password) 
+	END
 END
 END
-
-
-
-
-
-
-
 
 GO
-/****** Object:  UserDefinedFunction [dbo].[FullnameFormat]    Script Date: 14/06/2024 3:43:35 pm ******/
+/****** Object:  UserDefinedFunction [dbo].[FullnameFormat]    Script Date: 20/06/2024 11:17:24 am ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -374,7 +372,7 @@ END
 
 
 GO
-/****** Object:  Table [dbo].[tbl_FormIssuance]    Script Date: 14/06/2024 3:43:35 pm ******/
+/****** Object:  Table [dbo].[tbl_FormIssuance]    Script Date: 20/06/2024 11:17:24 am ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -397,7 +395,7 @@ CREATE TABLE [dbo].[tbl_FormIssuance](
 GO
 SET ANSI_PADDING OFF
 GO
-/****** Object:  Table [dbo].[tbl_MapSetting]    Script Date: 14/06/2024 3:43:35 pm ******/
+/****** Object:  Table [dbo].[tbl_MapSetting]    Script Date: 20/06/2024 11:17:24 am ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -408,7 +406,7 @@ CREATE TABLE [dbo].[tbl_MapSetting](
 ) ON [PRIMARY]
 
 GO
-/****** Object:  Table [dbo].[tbl_Person]    Script Date: 14/06/2024 3:43:35 pm ******/
+/****** Object:  Table [dbo].[tbl_Person]    Script Date: 20/06/2024 11:17:24 am ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -450,7 +448,7 @@ CREATE TABLE [dbo].[tbl_Person](
 GO
 SET ANSI_PADDING OFF
 GO
-/****** Object:  Table [dbo].[tbl_ref_Position]    Script Date: 14/06/2024 3:43:35 pm ******/
+/****** Object:  Table [dbo].[tbl_ref_Position]    Script Date: 20/06/2024 11:17:24 am ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -471,7 +469,7 @@ PRIMARY KEY CLUSTERED
 GO
 SET ANSI_PADDING OFF
 GO
-/****** Object:  Table [dbo].[tbl_Staff]    Script Date: 14/06/2024 3:43:35 pm ******/
+/****** Object:  Table [dbo].[tbl_Staff]    Script Date: 20/06/2024 11:17:24 am ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -491,7 +489,7 @@ CREATE TABLE [dbo].[tbl_Staff](
 ) ON [PRIMARY]
 
 GO
-/****** Object:  Table [dbo].[tbl_User]    Script Date: 14/06/2024 3:43:35 pm ******/
+/****** Object:  Table [dbo].[tbl_User]    Script Date: 20/06/2024 11:17:24 am ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -516,7 +514,23 @@ CREATE TABLE [dbo].[tbl_User](
 GO
 SET ANSI_PADDING OFF
 GO
-/****** Object:  View [dbo].[vw_Person]    Script Date: 14/06/2024 3:43:35 pm ******/
+/****** Object:  Table [dbo].[tbl_User_Log]    Script Date: 20/06/2024 11:17:24 am ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[tbl_User_Log](
+	[ID] [int] IDENTITY(1,1) NOT NULL,
+	[User] [int] NULL,
+	[Timestamp] [datetime] NULL DEFAULT (getdate()),
+PRIMARY KEY CLUSTERED 
+(
+	[ID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+/****** Object:  View [dbo].[vw_Person]    Script Date: 20/06/2024 11:17:24 am ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -571,7 +585,7 @@ SELECT p.[ID]
 
 
 GO
-/****** Object:  View [dbo].[vw_Staff]    Script Date: 14/06/2024 3:43:35 pm ******/
+/****** Object:  View [dbo].[vw_Staff]    Script Date: 20/06/2024 11:17:24 am ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -598,11 +612,12 @@ SELECT st.[ID]
 
 
 GO
-/****** Object:  View [dbo].[vw_FormIssuance]    Script Date: 14/06/2024 3:43:35 pm ******/
+/****** Object:  View [dbo].[vw_FormIssuance]    Script Date: 20/06/2024 11:17:24 am ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
+
 
 CREATE VIEW [dbo].[vw_FormIssuance]
 AS
@@ -612,14 +627,31 @@ SELECT f.[ID]
       ,f.[Form]
 	  ,f.Reason
       ,f.[Encoder]
+	  ,EncoderName = UPPER(CONCAT(u.fname, ' ', u.lname))
       ,f.[Timestamp]
   FROM [tbl_FormIssuance] f
   LEFT JOIN vw_Person p ON p.ID = f.Person
+  LEFT JOIN tbl_User u ON u.ID = f.Encoder
 
 
 
 
 
+
+GO
+/****** Object:  View [dbo].[vw_User_Log]    Script Date: 20/06/2024 11:17:24 am ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE VIEW [dbo].[vw_User_Log]
+AS
+SELECT l.[ID]
+      ,l.[User]
+	  ,UserName = UPPER(CONCAT(u.fname, ' ' , u.lname))
+      ,l.[Timestamp]
+  FROM [tbl_User_Log] l
+  LEFT JOIN tbl_User u ON u.ID = l.[User]
 GO
 USE [master]
 GO

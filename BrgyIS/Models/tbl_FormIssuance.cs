@@ -32,6 +32,8 @@ namespace BrgyIS.Models
         [ScaffoldColumn(false)]
         public Int32 Encoder { get; set; }
 
+        public string EncoderName { get; set; }
+
         [Display(Name = "Timestamp")]
         [ScaffoldColumn(false)]
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy-MM-dd}")]

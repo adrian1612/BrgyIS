@@ -174,6 +174,12 @@ namespace BrgyIS.Models
             }).SingleOrDefault();
         }
 
+        public bool HasUser() {
+            var result = false;
+            s.Query("SELECT COUNT(*) FROM tbl_Person").ForEach(r => result = (int)r[0] >= 1);
+            return result;
+        }
+
         public void Create(tbl_Person obj)
         {
             s.Query("tbl_Person_Proc", p =>

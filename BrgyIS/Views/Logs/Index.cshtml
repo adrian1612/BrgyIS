@@ -1,0 +1,69 @@
+﻿
+@{
+    ViewBag.Title = "User logs";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="pagetitle">
+    <h1>@ViewBag.Title</h1>
+    <nav>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="@Url.Action("Index", "Home")">Dashboard</a></li>
+            <li class="breadcrumb-item active">@ViewBag.Title</li>
+        </ol>
+    </nav>
+</div>
+
+
+<div class="card">
+    <div class="card-body">
+        <div class="card-title">User Logs</div>
+        <div class="table-responsive">
+            <table data-bind="with: Collection" class="table table-light table-hover table-striped">
+                <thead>
+                    <tr>
+                        <th>User</th>
+                        <th>Timestamp</th>
+                    </tr>
+                </thead>
+                <tbody data-bind="foreach: $data">
+                    <tr>
+                        <td><span data-bind="text: UserName"></span></td>
+                        <td><span data-bind="text: moment(Timestamp).format('MMM-DD-YYYY hh:mm a')"></span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+@section scripts {
+    
+
+    <script>
+        function LogScheme(d) {
+            var self = this;
+            self.ID = d.ID;
+            self.User = d.User;
+            self.UserName = d.UserName;
+            self.Timestamp = d.Timestamp;
+        }
+
+        function LogModel() {
+            var self = this;
+            self.Collection = ko.observableArray();
+            self.loadData = () => {
+                $.get('@Url.Action("List", "Logs", new { area = "" })', null, (d) => {
+                    var data = $.map(d, (result) => { return new LogScheme(result); });
+                    self.Collection(data);
+                });
+            }
+
+            self.loadData();
+        }
+
+        var model = new LogModel();
+        ko.applyBindings(model);
+    </script>    
+    
+}

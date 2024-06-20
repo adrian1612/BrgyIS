@@ -148,6 +148,7 @@
                                 <th>Form</th>
                                 <th>Reason</th>
                                 <th>Date</th>
+                                <th>Encoder</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -156,6 +157,7 @@
                                 <td><span data-bind="text: Form"></span></td>
                                 <td><span data-bind="text: Reason ? Reason : 'N/A'"></span></td>
                                 <td><span data-bind="text: moment(Timestamp).format('MMMM-DD-YYYY hh:mm A')"></span></td>
+                                <td><span data-bind="text: EncoderName"></span></td>
                             </tr>
                             <!--/ko-->
                         </tbody>
